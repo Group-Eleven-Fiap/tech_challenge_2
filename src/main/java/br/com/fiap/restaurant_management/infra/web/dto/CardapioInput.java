@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Getter
 @NoArgsConstructor
 public class CardapioInput {
@@ -16,7 +18,7 @@ public class CardapioInput {
     private String descricao;
 
     @NotNull
-    private Double preco;
+    private BigDecimal preco;
 
     private Boolean disponibilidadeRestaurante;
 

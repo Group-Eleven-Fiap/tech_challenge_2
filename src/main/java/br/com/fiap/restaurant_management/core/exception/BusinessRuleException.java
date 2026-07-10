@@ -1,19 +1,20 @@
 package br.com.fiap.restaurant_management.core.exception;
 
 public class BusinessRuleException extends RuntimeException {
-    public BusinessRuleException() {
-        super();
-    }
+
+    private final String code;
 
     public BusinessRuleException(String message) {
         super(message);
+        this.code = "BUSINESS_RULE_VIOLATION";
     }
 
-    public BusinessRuleException(String message, Throwable cause) {
-        super(message, cause);
+    public BusinessRuleException(String code, String message) {
+        super(message);
+        this.code = code;
     }
 
-    public BusinessRuleException(Throwable cause) {
-        super(cause);
+    public String getCode() {
+        return code;
     }
 }
