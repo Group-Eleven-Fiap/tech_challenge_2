@@ -13,14 +13,15 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "TB_MEAL")
-public class MealEntity {
+@Table(name = "TB_CARDAPIO")
+public class CardapioEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String description;
-    private Double price;
-    private String pictureUrl;
+    private String nome;
+    private String descricao;
+    private Double preco;
+    private Boolean disponibilidadeRestaurante;
+    private String fotoUrl;
 }

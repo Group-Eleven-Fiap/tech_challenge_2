@@ -7,17 +7,19 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class MealInput {
+public class CardapioInput {
 
     @NotBlank
-    private String name;
+    private String nome;
 
     @NotBlank
-    private String description;
+    private String descricao;
 
     @NotNull
-    private Double price;
+    private Double preco;
+
+    private Boolean disponibilidadeRestaurante;
 
     @NotBlank
-    private String pictureUrl;
+    private String fotoUrl;
 }
