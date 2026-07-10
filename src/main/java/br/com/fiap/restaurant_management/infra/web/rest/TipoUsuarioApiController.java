@@ -24,13 +24,13 @@ public class TipoUsuarioApiController {
         return controller.criar(mapToDto(input));
     }
 
-    @PatchMapping("{id}")
+    @PutMapping("{id}")
     public void atualizar(@PathVariable Long id, @Valid @RequestBody TipoUsuarioInput input) {
         controller.atualizar(id, mapToDto(input));
     }
 
     @DeleteMapping("{id}")
-    public void atualizar(@PathVariable Long id) {
+    public void excluir(@PathVariable Long id) {
         controller.excluir(id);
     }
 
