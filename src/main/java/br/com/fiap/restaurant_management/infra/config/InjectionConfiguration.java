@@ -1,10 +1,10 @@
 package br.com.fiap.restaurant_management.infra.config;
 
-import br.com.fiap.restaurant_management.core.controller.MealController;
-import br.com.fiap.restaurant_management.core.mapper.MealMapper;
-import br.com.fiap.restaurant_management.core.gateway.MealGateway;
-import br.com.fiap.restaurant_management.core.usecase.MealUseCase;
-import br.com.fiap.restaurant_management.core.usecase.MealUseCaseImpl;
+import br.com.fiap.restaurant_management.core.controller.CardapioController;
+import br.com.fiap.restaurant_management.core.mapper.CardapioMapper;
+import br.com.fiap.restaurant_management.core.gateway.CardapioGateway;
+import br.com.fiap.restaurant_management.core.usecase.CardapioUseCase;
+import br.com.fiap.restaurant_management.core.usecase.CardapioUseCaseImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,16 +13,16 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class InjectionConfiguration {
 
-    private final MealMapper mealMapper;
-    private final MealGateway mealGateway;
+    private final CardapioMapper cardapioMapper;
+    private final CardapioGateway cardapioGateway;
 
     @Bean
-    public MealUseCase mealUseCase() {
-        return new MealUseCaseImpl(mealMapper, mealGateway);
+    public CardapioUseCase cardapioUseCase() {
+        return new CardapioUseCaseImpl(cardapioMapper, cardapioGateway);
     }
 
     @Bean
-    public MealController mealController(MealUseCase mealUseCase) {
-        return new MealController(mealUseCase, mealMapper);
+    public CardapioController cardapioController(CardapioUseCase cardapioUseCase) {
+        return new CardapioController(cardapioUseCase, cardapioMapper);
     }
 }
