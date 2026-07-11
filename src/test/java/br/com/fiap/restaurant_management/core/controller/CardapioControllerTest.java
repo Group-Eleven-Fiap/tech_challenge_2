@@ -33,22 +33,22 @@ class CardapioControllerTest {
     }
 
     private CardapioDTO buildDto() {
-        return new CardapioDTO("Nome", "Desc", new BigDecimal("5.00"), true, "url");
+        return new CardapioDTO(null, 1L, "Nome", "Desc", new BigDecimal("5.00"), true, "url");
     }
 
     private Cardapio buildDomain() {
-        return new Cardapio("Nome", "Desc", new BigDecimal("5.00"), true, "url");
+        return new Cardapio(1L, "Nome", "Desc", new BigDecimal("5.00"), true, "url");
     }
 
     @Test
     void criarCardapio_shouldMapUseCaseAndReturnDto() {
         CardapioDTO inputDto = buildDto();
         Cardapio domain = buildDomain();
-        Cardapio created = new Cardapio("Nome", "Desc", new BigDecimal("5.00"), true, "url");
+        Cardapio created = new Cardapio(1L, "Nome", "Desc", new BigDecimal("5.00"), true, "url");
 
         when(mapper.toCardapio(inputDto)).thenReturn(domain);
         when(useCase.criar(domain)).thenReturn(created);
-        CardapioDTO expected = new CardapioDTO("Nome", "Desc", new BigDecimal("5.00"), true, "url");
+        CardapioDTO expected = new CardapioDTO(1L, 1L, "Nome", "Desc", new BigDecimal("5.00"), true, "url");
         when(mapper.toCardapioDTO(created)).thenReturn(expected);
 
         CardapioDTO result = controller.criarCardapio(inputDto);
@@ -63,10 +63,10 @@ class CardapioControllerTest {
     @Test
     void atualizarCardapio_shouldCallUseCaseAndReturnDto() {
         Long id = 7L;
-        CardapioDTO inputDto = new CardapioDTO("Novo", "NovoDesc", new BigDecimal("8.00"), false, "u");
-        Cardapio domain = new Cardapio("Novo", "NovoDesc", new BigDecimal("8.00"), false, "u");
+        CardapioDTO inputDto = new CardapioDTO(null, 1L, "Novo", "NovoDesc", new BigDecimal("8.00"), false, "u");
+        Cardapio domain = new Cardapio(1L, "Novo", "NovoDesc", new BigDecimal("8.00"), false, "u");
         Cardapio updated = domain;
-        CardapioDTO expected = inputDto;
+        CardapioDTO expected = new CardapioDTO(id, 1L, "Novo", "NovoDesc", new BigDecimal("8.00"), false, "u");
 
         when(mapper.toCardapio(inputDto)).thenReturn(domain);
         when(useCase.atualizar(id, domain)).thenReturn(updated);
@@ -95,7 +95,7 @@ class CardapioControllerTest {
     void obterCardapioPorId_shouldReturnMappedDto() {
         Long id = 4L;
         Cardapio domain = buildDomain();
-        CardapioDTO expected = buildDto();
+        CardapioDTO expected = new CardapioDTO(id, 1L, "Nome", "Desc", new BigDecimal("5.00"), true, "url");
 
         when(useCase.obterPorId(id)).thenReturn(domain);
         when(mapper.toCardapioDTO(domain)).thenReturn(expected);
@@ -110,10 +110,10 @@ class CardapioControllerTest {
 
     @Test
     void listarCardapios_shouldReturnMappedList() {
-        Cardapio d1 = new Cardapio("A","a", new BigDecimal("1.00"), true, "u");
-        Cardapio d2 = new Cardapio("B","b", new BigDecimal("2.00"), false, "v");
-        CardapioDTO dto1 = new CardapioDTO("A","a", new BigDecimal("1.00"), true, "u");
-        CardapioDTO dto2 = new CardapioDTO("B","b", new BigDecimal("2.00"), false, "v");
+        Cardapio d1 = new Cardapio(1L, "A","a", new BigDecimal("1.00"), true, "u");
+        Cardapio d2 = new Cardapio(1L, "B","b", new BigDecimal("2.00"), false, "v");
+        CardapioDTO dto1 = new CardapioDTO(1L, 1L, "A","a", new BigDecimal("1.00"), true, "u");
+        CardapioDTO dto2 = new CardapioDTO(2L, 1L, "B","b", new BigDecimal("2.00"), false, "v");
 
         when(useCase.listar()).thenReturn(List.of(d1, d2));
         when(mapper.toCardapioDTO(d1)).thenReturn(dto1);

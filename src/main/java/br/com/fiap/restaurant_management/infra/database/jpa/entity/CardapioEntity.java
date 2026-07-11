@@ -23,6 +23,9 @@ public class CardapioEntity {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "id_restaurante", nullable = false)
+    private Long idRestaurante;
+
     @Column(name = "nome", nullable = false)
     private String nome;
 

@@ -56,7 +56,8 @@ public class CardapioApiController implements CardapioControllerApi {
     }
 
     private CardapioDTO mapToDto(CardapioInput input) {
-        return new CardapioDTO(
+        return new CardapioDTO(null,
+                input.getIdRestaurante(),
                 input.getNome(),
                 input.getDescricao(),
                 input.getPreco(),

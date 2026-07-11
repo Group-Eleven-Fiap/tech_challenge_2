@@ -6,14 +6,17 @@ import lombok.Getter;
 @Getter
 public class Cardapio {
 
-    private Long id;
+    private Long idRestaurante;
     private String nome;
     private String descricao;
     private BigDecimal preco;
     private Boolean disponibilidadeRestaurante;
     private String fotoUrl;
 
-    public Cardapio(String nome, String descricao, BigDecimal preco, Boolean disponibilidadeRestaurante, String fotoUrl) {
+    public Cardapio(Long idRestaurante, String nome, String descricao, BigDecimal preco, Boolean disponibilidadeRestaurante, String fotoUrl) {
+        if (idRestaurante == null || idRestaurante <= 0) {
+            throw new IllegalArgumentException("ID do restaurante é obrigatório");
+        }
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Nome é obrigatório");
         }
@@ -30,6 +33,7 @@ public class Cardapio {
             throw new IllegalArgumentException("Caminho da foto é obrigatório");
         }
 
+        this.idRestaurante = idRestaurante;
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;

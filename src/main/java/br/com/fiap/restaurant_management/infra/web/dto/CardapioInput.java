@@ -11,6 +11,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class CardapioInput {
 
+    @NotNull
+    private Long idRestaurante;
+
     @NotBlank
     private String nome;
 

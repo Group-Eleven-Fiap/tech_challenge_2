@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 public class CardapioMapper {
 
     public Cardapio toCardapio(CardapioDTO input) {
-        return new Cardapio(input.getNome(),
+        return new Cardapio(input.getIdRestaurante(),
+                input.getNome(),
                 input.getDescricao(),
                 input.getPreco(),
                 input.getDisponibilidadeRestaurante(),
@@ -16,7 +17,9 @@ public class CardapioMapper {
     }
 
     public CardapioDTO toCardapioDTO(Cardapio cardapio) {
-        return new CardapioDTO(cardapio.getNome(),
+        return new CardapioDTO(null,
+                cardapio.getIdRestaurante(),
+                cardapio.getNome(),
                 cardapio.getDescricao(),
                 cardapio.getPreco(),
                 cardapio.getDisponibilidadeRestaurante(),

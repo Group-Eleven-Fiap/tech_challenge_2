@@ -35,12 +35,13 @@ class CardapioJpaGatewayTest {
     }
 
     private CardapioDTO buildDto() {
-        return new CardapioDTO("Nome", "Desc", new BigDecimal("5.00"), true, "url");
+        return new CardapioDTO(1L, 1L, "Nome", "Desc", new BigDecimal("5.00"), true, "url");
     }
 
     private CardapioEntity buildEntity() {
         CardapioEntity e = new CardapioEntity();
         e.setId(1L);
+        e.setIdRestaurante(1L);
         e.setNome("Nome");
         e.setDescricao("Desc");
         e.setPreco(new BigDecimal("5.00"));
@@ -70,7 +71,7 @@ class CardapioJpaGatewayTest {
     @Test
     void atualizarCardapio_whenExists_shouldUpdateAndReturnDto() {
         Long id = 10L;
-        CardapioDTO input = new CardapioDTO("Novo", "NovoDesc", new BigDecimal("8.00"), false, "newUrl");
+        CardapioDTO input = new CardapioDTO(id, 1L, "Novo", "NovoDesc", new BigDecimal("8.00"), false, "newUrl");
         CardapioEntity existing = buildEntity();
         existing.setId(id);
 
@@ -146,8 +147,8 @@ class CardapioJpaGatewayTest {
         CardapioEntity e1 = buildEntity();
         CardapioEntity e2 = buildEntity();
         e2.setId(2L);
-        CardapioDTO d1 = new CardapioDTO("A","a", new BigDecimal("1.00"), true, "u");
-        CardapioDTO d2 = new CardapioDTO("B","b", new BigDecimal("2.00"), false, "v");
+        CardapioDTO d1 = new CardapioDTO(1L, 1L, "A","a", new BigDecimal("1.00"), true, "u");
+        CardapioDTO d2 = new CardapioDTO(2L, 1L, "B","b", new BigDecimal("2.00"), false, "v");
 
         when(repository.findAll()).thenReturn(List.of(e1, e2));
         when(mapper.toCardapioDTO(e1)).thenReturn(d1);
