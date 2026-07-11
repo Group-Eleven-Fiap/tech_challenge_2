@@ -41,6 +41,7 @@ class CardapioApiControllerTest {
 
     private CardapioInput buildInput() throws Exception {
         CardapioInput in = new CardapioInput();
+        setField(in, "idRestaurante", 1L);
         setField(in, "nome", "Pizza");
         setField(in, "descricao", "Delicious");
         setField(in, "preco", new BigDecimal("10.00"));
@@ -52,7 +53,7 @@ class CardapioApiControllerTest {
     @Test
     void criar_shouldReturnCreatedWithBody() throws Exception {
         CardapioInput input = buildInput();
-        CardapioDTO expected = new CardapioDTO("Pizza", "Delicious", new BigDecimal("10.00"), true, "http://img.png");
+        CardapioDTO expected = new CardapioDTO(1L, 1L, "Pizza", "Delicious", new BigDecimal("10.00"), true, "http://img.png");
 
         when(mockController.criarCardapio(any(CardapioDTO.class))).thenReturn(expected);
 
@@ -68,7 +69,7 @@ class CardapioApiControllerTest {
     void atualizar_shouldReturnOkWithBody() throws Exception {
         CardapioInput input = buildInput();
         Long id = 1L;
-        CardapioDTO expected = new CardapioDTO("Pizza", "Delicious", new BigDecimal("12.00"), true, "http://img.png");
+        CardapioDTO expected = new CardapioDTO(id, 1L, "Pizza", "Delicious", new BigDecimal("12.00"), true, "http://img.png");
 
         when(mockController.atualizarCardapio(eq(id), any(CardapioDTO.class))).thenReturn(expected);
 
@@ -94,7 +95,7 @@ class CardapioApiControllerTest {
     @Test
     void obterPorId_shouldReturnOkWithBody() {
         Long id = 3L;
-        CardapioDTO expected = new CardapioDTO("Sushi", "Fresh", new BigDecimal("20.00"), true, "http://sushi.png");
+        CardapioDTO expected = new CardapioDTO(id, 1L, "Sushi", "Fresh", new BigDecimal("20.00"), true, "http://sushi.png");
 
         when(mockController.obterCardapioPorId(id)).thenReturn(expected);
 
@@ -107,8 +108,8 @@ class CardapioApiControllerTest {
 
     @Test
     void listar_shouldReturnOkWithList() {
-        CardapioDTO a = new CardapioDTO("A", "a", new BigDecimal("1.00"), true, "u");
-        CardapioDTO b = new CardapioDTO("B", "b", new BigDecimal("2.00"), false, "v");
+        CardapioDTO a = new CardapioDTO(1L, 1L, "A", "a", new BigDecimal("1.00"), true, "u");
+        CardapioDTO b = new CardapioDTO(2L, 1L, "B", "b", new BigDecimal("2.00"), false, "v");
 
         when(mockController.listarCardapios()).thenReturn(List.of(a, b));
 

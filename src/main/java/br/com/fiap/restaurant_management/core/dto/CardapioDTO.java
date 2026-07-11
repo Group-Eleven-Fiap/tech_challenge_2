@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class CardapioDTO {
 
+    private Long id;
+    private Long idRestaurante;
     private String nome;
     private String descricao;
     private BigDecimal preco;

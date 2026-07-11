@@ -35,11 +35,11 @@ class CardapioUseCaseImplTest {
     }
 
     private Cardapio buildDomain() {
-        return new Cardapio("Nome", "Desc", new BigDecimal("5.00"), true, "url");
+        return new Cardapio(1L, "Nome", "Desc", new BigDecimal("5.00"), true, "url");
     }
 
     private CardapioDTO buildDto() {
-        return new CardapioDTO("Nome", "Desc", new BigDecimal("5.00"), true, "url");
+        return new CardapioDTO(null, 1L, "Nome", "Desc", new BigDecimal("5.00"), true, "url");
     }
 
     @Test
@@ -84,7 +84,7 @@ class CardapioUseCaseImplTest {
     void atualizar_whenExists_shouldUpdateAndReturnDomain() {
         Long id = 6L;
         Cardapio domain = buildDomain();
-        CardapioDTO dto = buildDto();
+        CardapioDTO dto = new CardapioDTO(id, 1L, "Nome", "Desc", new BigDecimal("5.00"), true, "url");
 
         when(gateway.obterCardapioPorId(id)).thenReturn(Optional.of(dto));
         when(mapper.toCardapioDTO(domain)).thenReturn(dto);
@@ -121,7 +121,7 @@ class CardapioUseCaseImplTest {
     @Test
     void deletar_whenExists_shouldCallGatewayDelete() {
         Long id = 8L;
-        CardapioDTO dto = buildDto();
+        CardapioDTO dto = new CardapioDTO(id, 1L, "Nome", "Desc", new BigDecimal("5.00"), true, "url");
         when(gateway.obterCardapioPorId(id)).thenReturn(Optional.of(dto));
         doNothing().when(gateway).deletarCardapio(id);
 
@@ -151,7 +151,7 @@ class CardapioUseCaseImplTest {
     @Test
     void obterPorId_whenFound_shouldReturnDomain() {
         Long id = 12L;
-        CardapioDTO dto = buildDto();
+        CardapioDTO dto = new CardapioDTO(id, 1L, "Nome", "Desc", new BigDecimal("5.00"), true, "url");
         Cardapio domain = buildDomain();
 
         when(gateway.obterCardapioPorId(id)).thenReturn(Optional.of(dto));
@@ -167,10 +167,10 @@ class CardapioUseCaseImplTest {
 
     @Test
     void listar_shouldReturnMappedList() {
-        CardapioDTO d1 = new CardapioDTO("A","a", new BigDecimal("1.00"), true, "u");
-        CardapioDTO d2 = new CardapioDTO("B","b", new BigDecimal("2.00"), false, "v");
-        Cardapio c1 = new Cardapio("A","a", new BigDecimal("1.00"), true, "u");
-        Cardapio c2 = new Cardapio("B","b", new BigDecimal("2.00"), false, "v");
+        CardapioDTO d1 = new CardapioDTO(1L, 1L, "A","a", new BigDecimal("1.00"), true, "u");
+        CardapioDTO d2 = new CardapioDTO(2L, 1L, "B","b", new BigDecimal("2.00"), false, "v");
+        Cardapio c1 = new Cardapio(1L, "A","a", new BigDecimal("1.00"), true, "u");
+        Cardapio c2 = new Cardapio(1L, "B","b", new BigDecimal("2.00"), false, "v");
 
         when(gateway.listarTodos()).thenReturn(List.of(d1, d2));
         when(mapper.toCardapio(d1)).thenReturn(c1);

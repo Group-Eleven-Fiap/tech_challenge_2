@@ -10,7 +10,7 @@ class CardapioTest {
 
     @Test
     void criar_comDadosValidos_deveCriar() {
-        Cardapio c = new Cardapio("Pizza", "Delicious", new BigDecimal("10.00"), true, "http://img.png");
+        Cardapio c = new Cardapio(1L, "Pizza", "Delicious", new BigDecimal("10.00"), true, "http://img.png");
         assertNotNull(c);
         assertEquals("Pizza", c.getNome());
         assertEquals("Delicious", c.getDescricao());
@@ -22,52 +22,52 @@ class CardapioTest {
     @Test
     void criar_nomeNulo_deveLancar() {
         assertThrows(IllegalArgumentException.class, () ->
-                new Cardapio(null, "Desc", new BigDecimal("1.00"), true, "u"));
+                new Cardapio(1L, null, "Desc", new BigDecimal("1.00"), true, "u"));
     }
 
     @Test
     void criar_nomeBlank_deveLancar() {
         assertThrows(IllegalArgumentException.class, () ->
-                new Cardapio("   ", "Desc", new BigDecimal("1.00"), true, "u"));
+                new Cardapio(1L, "   ", "Desc", new BigDecimal("1.00"), true, "u"));
     }
 
     @Test
     void criar_descricaoNula_deveLancar() {
         assertThrows(IllegalArgumentException.class, () ->
-                new Cardapio("N", null, new BigDecimal("1.00"), true, "u"));
+                new Cardapio(1L, "N", null, new BigDecimal("1.00"), true, "u"));
     }
 
     @Test
     void criar_descricaoBlank_deveLancar() {
         assertThrows(IllegalArgumentException.class, () ->
-                new Cardapio("N", "", new BigDecimal("1.00"), true, "u"));
+                new Cardapio(1L, "N", "", new BigDecimal("1.00"), true, "u"));
     }
 
     @Test
     void criar_precoNulo_deveLancar() {
         assertThrows(IllegalArgumentException.class, () ->
-                new Cardapio("N", "D", null, true, "u"));
+                new Cardapio(1L, "N", "D", null, true, "u"));
     }
 
     @Test
     void criar_precoZeroOuNegativo_deveLancar() {
         assertThrows(IllegalArgumentException.class, () ->
-                new Cardapio("N", "D", BigDecimal.ZERO, true, "u"));
+                new Cardapio(1L, "N", "D", BigDecimal.ZERO, true, "u"));
         assertThrows(IllegalArgumentException.class, () ->
-                new Cardapio("N", "D", new BigDecimal("-1.00"), true, "u"));
+                new Cardapio(1L, "N", "D", new BigDecimal("-1.00"), true, "u"));
     }
 
     @Test
     void criar_disponibilidadeNula_deveLancar() {
         assertThrows(IllegalArgumentException.class, () ->
-                new Cardapio("N", "D", new BigDecimal("1.00"), null, "u"));
+                new Cardapio(1L, "N", "D", new BigDecimal("1.00"), null, "u"));
     }
 
     @Test
     void criar_fotoUrlNulaOuBlank_deveLancar() {
         assertThrows(IllegalArgumentException.class, () ->
-                new Cardapio("N", "D", new BigDecimal("1.00"), true, null));
+                new Cardapio(1L, "N", "D", new BigDecimal("1.00"), true, null));
         assertThrows(IllegalArgumentException.class, () ->
-                new Cardapio("N", "D", new BigDecimal("1.00"), true, "   "));
+                new Cardapio(1L, "N", "D", new BigDecimal("1.00"), true, "   "));
     }
 }

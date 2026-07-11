@@ -9,6 +9,7 @@ public class CardapioEntityMapper {
 
     public CardapioEntity toEntity(CardapioDTO input) {
         return CardapioEntity.builder()
+                .idRestaurante(input.getIdRestaurante())
                 .nome(input.getNome())
                 .descricao(input.getDescricao())
                 .preco(input.getPreco())
@@ -18,7 +19,9 @@ public class CardapioEntityMapper {
     }
 
     public CardapioDTO toCardapioDTO(CardapioEntity entity) {
-        return new CardapioDTO(entity.getNome(),
+        return new CardapioDTO(entity.getId(),
+                entity.getIdRestaurante(),
+                entity.getNome(),
                 entity.getDescricao(),
                 entity.getPreco(),
                 entity.getDisponibilidadeRestaurante(),
