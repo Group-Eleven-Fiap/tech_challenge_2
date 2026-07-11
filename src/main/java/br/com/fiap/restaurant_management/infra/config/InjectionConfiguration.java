@@ -1,5 +1,10 @@
 package br.com.fiap.restaurant_management.infra.config;
 
+import br.com.fiap.restaurant_management.core.controller.RestauranteExpedienteController;
+import br.com.fiap.restaurant_management.core.gateway.RestauranteExpedienteGateway;
+import br.com.fiap.restaurant_management.core.mapper.RestauranteExpedienteMapper;
+import br.com.fiap.restaurant_management.core.usecase.RestauranteExpedienteUseCase;
+import br.com.fiap.restaurant_management.core.usecase.RestauranteExpedienteUseCaseImpl;
 import br.com.fiap.restaurant_management.core.controller.CardapioController;
 import br.com.fiap.restaurant_management.core.controller.TipoUsuarioController;
 import br.com.fiap.restaurant_management.core.controller.UsuarioController;
@@ -18,6 +23,8 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class InjectionConfiguration {
 
+    private final RestauranteExpedienteMapper restauranteExpedienteMapper;
+    private final RestauranteExpedienteGateway restauranteExpedienteGateway;
     private final CardapioMapper cardapioMapper;
     private final CardapioGateway cardapioGateway;
 
@@ -106,5 +113,15 @@ public class InjectionConfiguration {
                 atualizarUsuarioTipoUsuarioUseCase,
                 excluirUsuarioUseCase,
                 consultarUsuarioUseCase);
+    }
+
+    @Bean
+    public RestauranteExpedienteUseCase restauranteExpedienteUseCase() {
+        return new RestauranteExpedienteUseCaseImpl(restauranteExpedienteMapper, restauranteExpedienteGateway);
+    }
+
+    @Bean
+    public RestauranteExpedienteController restauranteExpedienteController(RestauranteExpedienteUseCase restauranteExpedienteUseCase) {
+        return new RestauranteExpedienteController(restauranteExpedienteUseCase, restauranteExpedienteMapper);
     }
 }
