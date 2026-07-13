@@ -12,24 +12,20 @@ public class Restaurante {
     private final String nome;
     private final String endereco;
     private final String tipoCozinha;
-    private final String horarioFuncionamento;
     private final Long idDono;
     private final LocalDateTime criadoEm;
     private final LocalDateTime atualizadoEm;
 
-    public Restaurante(String nome, String endereco, String tipoCozinha,
-                       String horarioFuncionamento, Long idDono) {
-        this(null, nome, endereco, tipoCozinha, horarioFuncionamento, idDono, null, null);
+    public Restaurante(String nome, String endereco, String tipoCozinha, Long idDono) {
+        this(null, nome, endereco, tipoCozinha, idDono, null, null);
     }
 
-    public Restaurante(Long id, String nome, String endereco, String tipoCozinha,
-                       String horarioFuncionamento, Long idDono,
+    public Restaurante(Long id, String nome, String endereco, String tipoCozinha, Long idDono,
                        LocalDateTime criadoEm, LocalDateTime atualizadoEm) {
         this.id = id;
         this.nome = validarTexto(nome, "Nome");
         this.endereco = validarTexto(endereco, "Endereço");
         this.tipoCozinha = validarTexto(tipoCozinha, "Tipo de cozinha");
-        this.horarioFuncionamento = validarTexto(horarioFuncionamento, "Horário de funcionamento");
         if (idDono == null || idDono <= 0) {
             throw new BusinessRuleException("Dono do restaurante é obrigatório");
         }

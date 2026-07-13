@@ -4,6 +4,7 @@ import br.com.fiap.restaurant_management.core.domain.RestauranteExpediente;
 import br.com.fiap.restaurant_management.core.dto.RestauranteExpedienteDTO;
 import br.com.fiap.restaurant_management.core.exception.BusinessRuleException;
 import br.com.fiap.restaurant_management.core.gateway.RestauranteExpedienteGateway;
+import br.com.fiap.restaurant_management.core.gateway.RestauranteGateway;
 import br.com.fiap.restaurant_management.core.mapper.RestauranteExpedienteMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -38,18 +40,23 @@ class RestauranteExpedienteUseCaseImplTest {
     @Mock
     private RestauranteExpedienteGateway restauranteExpedienteGateway;
 
+    @Mock
+    private RestauranteGateway restauranteGateway;
+
     @InjectMocks
     private RestauranteExpedienteUseCaseImpl useCase;
 
-    private UUID idRestaurante;
+    private Long idRestaurante;
     private RestauranteExpediente expedienteValido;
     private RestauranteExpedienteDTO dtoValido;
 
     @BeforeEach
     void setUp() {
-        idRestaurante = UUID.randomUUID();
+        idRestaurante = 1L;
         expedienteValido = new RestauranteExpediente(idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
         dtoValido = new RestauranteExpedienteDTO(null, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
+        lenient().when(restauranteGateway.consultarPorId(idRestaurante))
+                .thenReturn(Optional.of(org.mockito.Mockito.mock(br.com.fiap.restaurant_management.core.domain.Restaurante.class)));
     }
 
     @Nested
@@ -118,6 +125,17 @@ class RestauranteExpedienteUseCaseImplTest {
             assertThatThrownBy(() -> useCase.create(expedienteValido))
                     .isInstanceOf(BusinessRuleException.class)
                     .hasMessage("já existe um expediente cadastrado para este restaurante neste dia da semana");
+
+            verify(restauranteExpedienteGateway, never()).createExpediente(any());
+        }
+
+        @Test
+        @DisplayName("deve rejeitar expediente quando o restaurante nao existir")
+        void deveRejeitarRestauranteInexistente() {
+            when(restauranteGateway.consultarPorId(idRestaurante)).thenReturn(Optional.empty());
+
+            assertThatThrownBy(() -> useCase.create(expedienteValido))
+                    .isInstanceOf(br.com.fiap.restaurant_management.core.exception.ResourceNotFoundException.class);
 
             verify(restauranteExpedienteGateway, never()).createExpediente(any());
         }

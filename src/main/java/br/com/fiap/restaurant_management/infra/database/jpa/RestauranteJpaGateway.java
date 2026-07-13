@@ -7,12 +7,14 @@ import br.com.fiap.restaurant_management.infra.database.jpa.repository.UsuarioRe
 import br.com.fiap.restaurant_management.infra.database.mapper.RestauranteEntityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
+@Transactional
 public class RestauranteJpaGateway implements RestauranteGateway {
 
     private final RestauranteRepository restauranteRepository;
@@ -32,7 +34,6 @@ public class RestauranteJpaGateway implements RestauranteGateway {
         existente.setNome(restaurante.getNome());
         existente.setEndereco(restaurante.getEndereco());
         existente.setTipoCozinha(restaurante.getTipoCozinha());
-        existente.setHorarioFuncionamento(restaurante.getHorarioFuncionamento());
         existente.setDono(usuarioRepository.getReferenceById(restaurante.getIdDono()));
         return restauranteEntityMapper.toDomain(restauranteRepository.save(existente));
     }

@@ -34,7 +34,7 @@ class RestauranteUseCaseImplTest {
     @BeforeEach
     void preparar() {
         useCase = new RestauranteUseCaseImpl(restauranteGateway, usuarioGateway);
-        restaurante = new Restaurante("Sabor Brasil", "Rua A", "Brasileira", "11h às 22h", 1L);
+        restaurante = new Restaurante("Sabor Brasil", "Rua A", "Brasileira", 1L);
     }
 
     @Test

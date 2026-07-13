@@ -5,6 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
@@ -35,8 +39,10 @@ public class RestauranteExpedienteEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "id_restaurante", nullable = false)
-    private UUID idRestaurante;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_restaurante", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_expediente_restaurante"))
+    private RestauranteEntity restaurante;
 
     @Column(name = "dia_semana", nullable = false, length = 15)
     private String diaSemana;

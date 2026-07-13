@@ -9,16 +9,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -42,13 +47,19 @@ public class RestauranteEntity {
     @Column(name = "tipo_cozinha", nullable = false, length = 100)
     private String tipoCozinha;
 
-    @Column(name = "horario_funcionamento", nullable = false, length = 100)
-    private String horarioFuncionamento;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_dono", nullable = false,
             foreignKey = @ForeignKey(name = "fk_restaurante_dono"))
     private UsuarioEntity dono;
+
+    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<RestauranteExpedienteEntity> expedientes = new ArrayList<>();
+
+    public void adicionarExpediente(RestauranteExpedienteEntity expediente) {
+        expedientes.add(expediente);
+        expediente.setRestaurante(this);
+    }
 
     @Column(name = "criado_em", nullable = false, updatable = false)
     private LocalDateTime criadoEm;

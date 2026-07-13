@@ -28,8 +28,7 @@ public class RestauranteUseCaseImpl implements RestauranteUseCase {
 
         var restauranteAtualizado = new Restaurante(
                 id, restaurante.getNome(), restaurante.getEndereco(), restaurante.getTipoCozinha(),
-                restaurante.getHorarioFuncionamento(), restaurante.getIdDono(),
-                restaurante.getCriadoEm(), restaurante.getAtualizadoEm());
+                restaurante.getIdDono(), restaurante.getCriadoEm(), restaurante.getAtualizadoEm());
         return restauranteGateway.atualizar(restauranteAtualizado);
     }
 

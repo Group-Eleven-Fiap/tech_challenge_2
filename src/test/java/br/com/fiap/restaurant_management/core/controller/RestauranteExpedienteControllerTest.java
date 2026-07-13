@@ -33,14 +33,14 @@ class RestauranteExpedienteControllerTest {
     private RestauranteExpedienteController controller;
 
     private UUID id;
-    private UUID idRestaurante;
+    private Long idRestaurante;
     private RestauranteExpedienteDTO dto;
     private RestauranteExpediente domain;
 
     @BeforeEach
     void setUp() {
         id = UUID.randomUUID();
-        idRestaurante = UUID.randomUUID();
+        idRestaurante = 1L;
         dto = new RestauranteExpedienteDTO(id, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
         domain = new RestauranteExpediente(id, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
     }

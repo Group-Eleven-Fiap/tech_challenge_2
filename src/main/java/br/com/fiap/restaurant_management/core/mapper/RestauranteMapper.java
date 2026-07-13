@@ -10,13 +10,12 @@ public class RestauranteMapper {
     public Restaurante toDomain(RestauranteDTO dto) {
         return new Restaurante(
                 dto.getId(), dto.getNome(), dto.getEndereco(), dto.getTipoCozinha(),
-                dto.getHorarioFuncionamento(), dto.getIdDono(), dto.getCriadoEm(), dto.getAtualizadoEm());
+                dto.getIdDono(), dto.getCriadoEm(), dto.getAtualizadoEm());
     }
 
     public RestauranteDTO toDTO(Restaurante restaurante) {
         return new RestauranteDTO(
                 restaurante.getId(), restaurante.getNome(), restaurante.getEndereco(), restaurante.getTipoCozinha(),
-                restaurante.getHorarioFuncionamento(), restaurante.getIdDono(),
-                restaurante.getCriadoEm(), restaurante.getAtualizadoEm());
+                restaurante.getIdDono(), restaurante.getCriadoEm(), restaurante.getAtualizadoEm());
     }
 }

@@ -35,10 +35,9 @@ class RestauranteApiControllerTest {
         definir("nome", "Sabor Brasil");
         definir("endereco", "Rua A, 10");
         definir("tipoCozinha", "Brasileira");
-        definir("horarioFuncionamento", "11h às 22h");
         definir("idDono", 1L);
         saida = new RestauranteDTO(2L, "Sabor Brasil", "Rua A, 10", "Brasileira",
-                "11h às 22h", 1L, null, null);
+                1L, null, null);
     }
 
     @Test

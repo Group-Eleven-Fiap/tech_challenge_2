@@ -122,7 +122,8 @@ public class InjectionConfiguration {
 
     @Bean
     public RestauranteExpedienteUseCase restauranteExpedienteUseCase() {
-        return new RestauranteExpedienteUseCaseImpl(restauranteExpedienteMapper, restauranteExpedienteGateway);
+        return new RestauranteExpedienteUseCaseImpl(
+                restauranteExpedienteMapper, restauranteExpedienteGateway, restauranteGateway);
     }
 
     @Bean

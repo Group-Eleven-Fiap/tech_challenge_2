@@ -13,7 +13,6 @@ public class RestauranteDTO {
     private String nome;
     private String endereco;
     private String tipoCozinha;
-    private String horarioFuncionamento;
     private Long idDono;
     private LocalDateTime criadoEm;
     private LocalDateTime atualizadoEm;

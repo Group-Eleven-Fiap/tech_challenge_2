@@ -14,7 +14,6 @@ public class RestauranteEntityMapper {
                 .nome(restaurante.getNome())
                 .endereco(restaurante.getEndereco())
                 .tipoCozinha(restaurante.getTipoCozinha())
-                .horarioFuncionamento(restaurante.getHorarioFuncionamento())
                 .dono(dono)
                 .criadoEm(restaurante.getCriadoEm())
                 .atualizadoEm(restaurante.getAtualizadoEm())
@@ -24,7 +23,6 @@ public class RestauranteEntityMapper {
     public Restaurante toDomain(RestauranteEntity entity) {
         return new Restaurante(
                 entity.getId(), entity.getNome(), entity.getEndereco(), entity.getTipoCozinha(),
-                entity.getHorarioFuncionamento(), entity.getDono().getId(),
-                entity.getCriadoEm(), entity.getAtualizadoEm());
+                entity.getDono().getId(), entity.getCriadoEm(), entity.getAtualizadoEm());
     }
 }

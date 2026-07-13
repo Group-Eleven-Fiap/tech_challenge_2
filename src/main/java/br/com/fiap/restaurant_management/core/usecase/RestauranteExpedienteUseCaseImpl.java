@@ -2,7 +2,9 @@ package br.com.fiap.restaurant_management.core.usecase;
 
 import br.com.fiap.restaurant_management.core.domain.RestauranteExpediente;
 import br.com.fiap.restaurant_management.core.exception.BusinessRuleException;
+import br.com.fiap.restaurant_management.core.exception.ResourceNotFoundException;
 import br.com.fiap.restaurant_management.core.gateway.RestauranteExpedienteGateway;
+import br.com.fiap.restaurant_management.core.gateway.RestauranteGateway;
 import br.com.fiap.restaurant_management.core.mapper.RestauranteExpedienteMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,11 +18,13 @@ public class RestauranteExpedienteUseCaseImpl implements RestauranteExpedienteUs
 
     private final RestauranteExpedienteMapper restauranteExpedienteMapper;
     private final RestauranteExpedienteGateway restauranteExpedienteGateway;
+    private final RestauranteGateway restauranteGateway;
 
     @Override
     public RestauranteExpediente create(RestauranteExpediente expediente) {
 
         validateExpediente(expediente);
+        validateRestauranteExistente(expediente.getIdRestaurante());
         validateDiaDisponivel(expediente.getIdRestaurante(), expediente.getDiaSemana());
 
         var expedienteDTO = restauranteExpedienteMapper.toDTO(expediente);
@@ -36,7 +40,7 @@ public class RestauranteExpedienteUseCaseImpl implements RestauranteExpedienteUs
     }
 
     @Override
-    public List<RestauranteExpediente> findByRestaurante(UUID idRestaurante) {
+    public List<RestauranteExpediente> findByRestaurante(Long idRestaurante) {
         return restauranteExpedienteGateway.findByRestaurante(idRestaurante).stream()
                 .map(restauranteExpedienteMapper::toDomain)
                 .toList();
@@ -46,6 +50,7 @@ public class RestauranteExpedienteUseCaseImpl implements RestauranteExpedienteUs
     public RestauranteExpediente update(UUID id, RestauranteExpediente expediente) {
 
         validateExpediente(expediente);
+        validateRestauranteExistente(expediente.getIdRestaurante());
 
         var existente = findById(id);
         boolean trocouDia = !existente.getDiaSemana().equalsIgnoreCase(expediente.getDiaSemana());
@@ -83,9 +88,14 @@ public class RestauranteExpedienteUseCaseImpl implements RestauranteExpedienteUs
         }
     }
 
-    private void validateDiaDisponivel(UUID idRestaurante, String diaSemana) {
+    private void validateDiaDisponivel(Long idRestaurante, String diaSemana) {
         if (restauranteExpedienteGateway.existsByRestauranteAndDia(idRestaurante, diaSemana)) {
             throw new BusinessRuleException("já existe um expediente cadastrado para este restaurante neste dia da semana");
         }
+    }
+
+    private void validateRestauranteExistente(Long idRestaurante) {
+        restauranteGateway.consultarPorId(idRestaurante)
+                .orElseThrow(() -> new ResourceNotFoundException("Restaurante", "id", idRestaurante));
     }
 }

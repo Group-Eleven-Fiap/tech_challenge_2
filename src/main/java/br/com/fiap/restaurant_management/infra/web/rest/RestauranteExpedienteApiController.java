@@ -40,7 +40,7 @@ public class RestauranteExpedienteApiController {
     }
 
     @GetMapping
-    public List<RestauranteExpedienteDTO> findByRestaurante(@RequestParam UUID idRestaurante) {
+    public List<RestauranteExpedienteDTO> findByRestaurante(@RequestParam Long idRestaurante) {
         return restauranteExpedienteController.listarPorRestaurante(idRestaurante);
     }
 

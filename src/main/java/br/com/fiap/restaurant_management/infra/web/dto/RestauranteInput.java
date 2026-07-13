@@ -23,10 +23,6 @@ public class RestauranteInput {
     @Size(max = 100, message = "Tipo de cozinha deve ter no máximo 100 caracteres")
     private String tipoCozinha;
 
-    @NotBlank(message = "Horário de funcionamento é obrigatório")
-    @Size(max = 100, message = "Horário de funcionamento deve ter no máximo 100 caracteres")
-    private String horarioFuncionamento;
-
     @NotNull(message = "Dono do restaurante é obrigatório")
     @Positive(message = "Identificador do dono deve ser positivo")
     private Long idDono;

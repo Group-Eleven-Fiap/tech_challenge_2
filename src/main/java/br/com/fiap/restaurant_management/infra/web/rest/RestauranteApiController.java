@@ -64,6 +64,6 @@ public class RestauranteApiController {
     private RestauranteDTO mapearEntrada(RestauranteInput entrada) {
         return new RestauranteDTO(
                 null, entrada.getNome(), entrada.getEndereco(), entrada.getTipoCozinha(),
-                entrada.getHorarioFuncionamento(), entrada.getIdDono(), null, null);
+                entrada.getIdDono(), null, null);
     }
 }

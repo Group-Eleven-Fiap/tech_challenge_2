@@ -12,9 +12,9 @@ public interface RestauranteExpedienteGateway {
 
     Optional<RestauranteExpedienteDTO> findById(UUID id);
 
-    List<RestauranteExpedienteDTO> findByRestaurante(UUID idRestaurante);
+    List<RestauranteExpedienteDTO> findByRestaurante(Long idRestaurante);
 
-    boolean existsByRestauranteAndDia(UUID idRestaurante, String diaSemana);
+    boolean existsByRestauranteAndDia(Long idRestaurante, String diaSemana);
 
     RestauranteExpedienteDTO updateExpediente(RestauranteExpedienteDTO expedienteDTO);
 

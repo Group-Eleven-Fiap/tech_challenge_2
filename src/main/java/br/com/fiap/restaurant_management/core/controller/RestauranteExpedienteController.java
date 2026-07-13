@@ -28,7 +28,7 @@ public class RestauranteExpedienteController {
         return restauranteExpedienteMapper.toDTO(expediente);
     }
 
-    public List<RestauranteExpedienteDTO> listarPorRestaurante(UUID idRestaurante) {
+    public List<RestauranteExpedienteDTO> listarPorRestaurante(Long idRestaurante) {
         return restauranteExpedienteUseCase.findByRestaurante(idRestaurante).stream()
                 .map(restauranteExpedienteMapper::toDTO)
                 .toList();

@@ -11,7 +11,7 @@ import java.util.UUID;
 public class RestauranteExpedienteDTO {
 
     private UUID id;
-    private UUID idRestaurante;
+    private Long idRestaurante;
     private String diaSemana;
     private LocalTime horaAbertura;
     private LocalTime horaFechamento;

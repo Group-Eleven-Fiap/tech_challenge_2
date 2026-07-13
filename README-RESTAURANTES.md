@@ -9,6 +9,7 @@ Este documento descreve somente a parte de restaurantes da branch `feature/resta
 - consultar um restaurante por identificador;
 - listar restaurantes;
 - excluir restaurante;
+- cadastrar os horários por dia da semana em `TB_RESTAURANTE_EXPEDIENTE`;
 - validar os campos obrigatórios e a existência do dono;
 - documentar os endpoints no Swagger/OpenAPI;
 - testar regras unitariamente e o fluxo completo com banco H2.
@@ -29,7 +30,8 @@ O módulo segue Clean Architecture. O núcleo não depende de JPA nem de HTTP.
 | Infrastructure/web | `infra/web/rest/RestauranteApiController.java` | Endpoints REST em `/v1/restaurantes` |
 | Infrastructure/web | `infra/web/dto/RestauranteInput.java` | Entrada e validações Jakarta Validation |
 | Infrastructure/database | `infra/database/jpa/RestauranteJpaGateway.java` | Implementação JPA da porta de persistência |
-| Infrastructure/database | `infra/database/jpa/entity/RestauranteEntity.java` | Tabela `TB_RESTAURANTE` e chave estrangeira do dono |
+| Infrastructure/database | `infra/database/jpa/entity/RestauranteEntity.java` | Tabela `TB_RESTAURANTE`, dono e relacionamento com expedientes |
+| Infrastructure/database | `infra/database/jpa/entity/RestauranteExpedienteEntity.java` | Horários e chave estrangeira `id_restaurante` |
 | Infrastructure/database | `infra/database/jpa/repository/RestauranteRepository.java` | Repositório Spring Data |
 | Infrastructure/database | `infra/database/mapper/RestauranteEntityMapper.java` | Conversão entre entidade JPA e domínio |
 | Configuration | `infra/config/InjectionConfiguration.java` | Liga controller, caso de uso e gateway por injeção de dependência |
@@ -47,6 +49,8 @@ Fluxo de uma requisição:
 | `GET` | `/v1/restaurantes/{id}` | `200 OK` ou `404 Not Found` |
 | `PUT` | `/v1/restaurantes/{id}` | `200 OK` e restaurante atualizado |
 | `DELETE` | `/v1/restaurantes/{id}` | `204 No Content` |
+| `POST` | `/v1/restaurante-expediente` | Cadastra um horário para um dia da semana |
+| `GET` | `/v1/restaurante-expediente?idRestaurante={id}` | Lista os horários do restaurante |
 
 Corpo de cadastro e atualização:
 
@@ -55,12 +59,24 @@ Corpo de cadastro e atualização:
   "nome": "Sabor Brasil",
   "endereco": "Rua das Flores, 100 - São Paulo/SP",
   "tipoCozinha": "Brasileira",
-  "horarioFuncionamento": "Segunda a sábado, das 11h às 23h",
   "idDono": 1
 }
 ```
 
 O `idDono` precisa apontar para um registro previamente criado em `/v1/usuario`.
+
+O horário é cadastrado separadamente e fica vinculado por chave estrangeira:
+
+```json
+{
+  "idRestaurante": 1,
+  "diaSemana": "SEGUNDA",
+  "horaAbertura": "11:00:00",
+  "horaFechamento": "22:00:00"
+}
+```
+
+Cada restaurante pode ter um expediente por dia da semana. Não existe mais a coluna textual `horario_funcionamento` em `TB_RESTAURANTE`.
 
 ## Como executar
 
@@ -94,7 +110,7 @@ Execute tudo e gere o relatório JaCoCo:
 .\mvnw.cmd clean verify
 ```
 
-O relatório HTML fica em `target/site/jacoco/index.html`. Na verificação desta branch foram executados 111 testes sem falhas; as classes cujo nome começa com `Restaurante` (sem incluir o módulo separado `RestauranteExpediente`) alcançaram 97,86% de cobertura de linhas.
+O relatório HTML fica em `target/site/jacoco/index.html`. Na verificação desta branch foram executados 112 testes sem falhas. O CRUD de `Restaurante` alcançou 98,51% e o conjunto `Restaurante` + `RestauranteExpediente` alcançou 98,01% de cobertura de linhas.
 
 Testes do módulo:
 
@@ -103,12 +119,12 @@ Testes do módulo:
 | `core/domain/RestauranteTest.java` | unitário | campos obrigatórios e normalização |
 | `core/usecase/RestauranteUseCaseImplTest.java` | unitário | regras, dono existente e CRUD |
 | `infra/web/rest/RestauranteApiControllerTest.java` | unitário | respostas HTTP produzidas pelos endpoints |
-| `RestauranteIntegrationTest.java` | integração | controller, caso de uso, gateway, JPA e H2 no fluxo completo |
+| `RestauranteIntegrationTest.java` | integração | CRUD, chave estrangeira restaurante-expediente e exclusão em cascata com H2 |
 
 ## Collection
 
-Importe `postman/restaurantes.postman_collection.json`. Ela contém cadastro, listagem, consulta, atualização e exclusão. Ajuste `idDono` para um usuário existente; a variável `idRestaurante` é preenchida automaticamente após o cadastro.
+Importe `postman/restaurantes.postman_collection.json`. Ela contém CRUD do restaurante e cadastro/consulta de expediente. Ajuste `idDono` para um usuário existente; a variável `idRestaurante` é preenchida automaticamente após o cadastro.
 
 ## Observação de integração com o grupo
 
-`Usuario` e `Cardapio` usam identificadores `Long`, portanto o restaurante também usa `Long`. O módulo existente `RestauranteExpediente` usa UUID para `idRestaurante`; essa inconsistência pertence a outro módulo e não foi alterada nesta entrega para manter o commit restrito à parte de restaurante.
+`Usuario`, `Cardapio` e `Restaurante` usam identificadores `Long`. O identificador do próprio expediente continua sendo UUID, enquanto sua chave estrangeira `id_restaurante` é `Long` e referencia `TB_RESTAURANTE.id`.
