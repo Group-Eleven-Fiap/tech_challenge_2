@@ -1,0 +1,62 @@
+{
+  "info": {
+    "name": "Tech Challenge 2 - Restaurantes",
+    "description": "Collection exclusiva do CRUD de restaurantes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "idDono", "value": "1" },
+    { "key": "idRestaurante", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Cadastrar restaurante",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 201', () => pm.response.to.have.status(201));",
+              "const resposta = pm.response.json();",
+              "pm.collectionVariables.set('idRestaurante', resposta.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Sabor Brasil\",\n  \"endereco\": \"Rua das Flores, 100 - São Paulo/SP\",\n  \"tipoCozinha\": \"Brasileira\",\n  \"horarioFuncionamento\": \"Segunda a sábado, das 11h às 23h\",\n  \"idDono\": {{idDono}}\n}"
+        },
+        "url": "{{baseUrl}}/v1/restaurantes"
+      }
+    },
+    {
+      "name": "Listar restaurantes",
+      "request": { "method": "GET", "url": "{{baseUrl}}/v1/restaurantes" }
+    },
+    {
+      "name": "Consultar restaurante",
+      "request": { "method": "GET", "url": "{{baseUrl}}/v1/restaurantes/{{idRestaurante}}" }
+    },
+    {
+      "name": "Atualizar restaurante",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Sabor Brasil Atualizado\",\n  \"endereco\": \"Avenida Central, 200 - São Paulo/SP\",\n  \"tipoCozinha\": \"Brasileira contemporânea\",\n  \"horarioFuncionamento\": \"Todos os dias, das 11h às 23h\",\n  \"idDono\": {{idDono}}\n}"
+        },
+        "url": "{{baseUrl}}/v1/restaurantes/{{idRestaurante}}"
+      }
+    },
+    {
+      "name": "Excluir restaurante",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/v1/restaurantes/{{idRestaurante}}" }
+    }
+  ]
+}
