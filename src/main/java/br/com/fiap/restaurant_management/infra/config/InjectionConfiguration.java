@@ -50,74 +50,23 @@ public class InjectionConfiguration {
     }
 
     @Bean
-    public CriarTipoUsuarioUseCase criarTipoUsuarioUseCase() {
-        return new CriarTipoUsuarioUseCaseImpl(tipoUsuarioMapper, tipoUsuarioGateway);
+    public TipoUsuarioUseCase tipoUsuarioUseCase() {
+        return new TipoUsuarioUseCaseImpl(tipoUsuarioMapper, tipoUsuarioGateway);
     }
 
     @Bean
-    public AtualizarTipoUsuarioUseCase atualizarTipoUsuarioUseCase() {
-        return new AtualizarTipoUsuarioUseCaseImpl(tipoUsuarioGateway);
+    public TipoUsuarioController tipoUsuarioController(TipoUsuarioUseCase useCase) {
+        return new TipoUsuarioController(useCase);
     }
 
     @Bean
-    public ExcluirTipoUsuarioUseCase excluirTipoUsuarioUseCase() {
-        return new ExcluirTipoUsuarioUseCaseImpl(tipoUsuarioGateway);
+    public UsuarioUseCase usuarioUseCase() {
+        return new UsuarioUseCaseImpl(usuarioMapper, usuarioGateway, tipoUsuarioGateway);
     }
 
     @Bean
-    public ConsultarTipoUsuarioUseCase consultarTipoUsuarioUseCase() {
-        return new ConsultarTipoUsuarioUseCaseImpl(tipoUsuarioMapper, tipoUsuarioGateway);
-    }
-
-    @Bean
-    public TipoUsuarioController tipoUsuarioController(CriarTipoUsuarioUseCase criarTipoUsuarioUseCase,
-                                                       AtualizarTipoUsuarioUseCase atualizarTipoUsuarioUseCase,
-                                                       ExcluirTipoUsuarioUseCase excluirTipoUsuarioUseCase,
-                                                       ConsultarTipoUsuarioUseCase consultarTipoUsuarioUseCase) {
-        return new TipoUsuarioController(
-                criarTipoUsuarioUseCase,
-                atualizarTipoUsuarioUseCase,
-                excluirTipoUsuarioUseCase,
-                consultarTipoUsuarioUseCase);
-    }
-
-    @Bean
-    public CriarUsuarioUseCase criarUsuarioUseCase() {
-        return new CriarUsuarioUseCaseImpl(usuarioMapper, usuarioGateway, tipoUsuarioGateway);
-    }
-
-    @Bean
-    public AtualizarUsuarioUseCase atualizarUsuarioUseCase() {
-        return new AtualizarUsuarioUseCaseImpl(usuarioGateway, tipoUsuarioGateway);
-    }
-
-    @Bean
-    public AtualizarUsuarioTipoUsuarioUseCase atualizarUsuarioTipoUsuarioUseCase() {
-        return new AtualizarUsuarioTipoUsuarioUseCaseImpl(usuarioGateway, tipoUsuarioGateway);
-    }
-
-    @Bean
-    public ExcluirUsuarioUseCase excluirUsuarioUseCase() {
-        return new ExcluirUsuarioUseCaseImpl(usuarioGateway);
-    }
-
-    @Bean
-    public ConsultarUsuarioUseCase consultarUsuarioUseCase() {
-        return new ConsultarUsuarioUseCaseImpl(usuarioMapper, usuarioGateway);
-    }
-
-    @Bean
-    public UsuarioController usuarioController(CriarUsuarioUseCase criarUsuarioUseCase,
-                                               AtualizarUsuarioUseCase atualizarUsuarioUseCase,
-                                               AtualizarUsuarioTipoUsuarioUseCase atualizarUsuarioTipoUsuarioUseCase,
-                                               ExcluirUsuarioUseCase excluirUsuarioUseCase,
-                                               ConsultarUsuarioUseCase consultarUsuarioUseCase) {
-        return new UsuarioController(
-                criarUsuarioUseCase,
-                atualizarUsuarioUseCase,
-                atualizarUsuarioTipoUsuarioUseCase,
-                excluirUsuarioUseCase,
-                consultarUsuarioUseCase);
+    public UsuarioController usuarioController(UsuarioUseCase useCase) {
+        return new UsuarioController(useCase);
     }
 
     @Bean

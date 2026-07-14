@@ -31,8 +31,8 @@ public class UsuarioApiController {
     }
 
     @PatchMapping("{usuarioId}")
-    public void atualizar(@Valid @RequestBody UsuarioTipoUsuarioInput input) {
-        controller.atualizarUsuarioTipoUsuario(input.getUsuarioId(), input.getTipoUsuarioId());
+    public void atualizarTipoUsuario(@Valid @RequestBody UsuarioTipoUsuarioInput input) {
+        controller.atualizarTipoUsuario(input.getUsuarioId(), input.getTipoUsuarioId());
     }
 
     @DeleteMapping("{id}")
