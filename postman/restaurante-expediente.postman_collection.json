@@ -1,0 +1,194 @@
+{
+  "info": {
+    "name": "Tech Challenge 2 - Expediente do Restaurante",
+    "description": "Collection exclusiva do CRUD de restaurante_expediente (horário de funcionamento).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "idRestaurante", "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6" },
+    { "key": "idExpediente", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Cadastrar expediente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 201', () => pm.response.to.have.status(201));",
+              "const resposta = pm.response.json();",
+              "pm.collectionVariables.set('idExpediente', resposta.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idRestaurante\": \"{{idRestaurante}}\",\n  \"diaSemana\": \"SEGUNDA\",\n  \"horaAbertura\": \"08:00:00\",\n  \"horaFechamento\": \"18:00:00\"\n}"
+        },
+        "url": "{{baseUrl}}/v1/restaurante-expediente"
+      }
+    },
+    {
+      "name": "Cadastrar expediente - dia da semana inválido",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idRestaurante\": \"{{idRestaurante}}\",\n  \"diaSemana\": \"FERIADO\",\n  \"horaAbertura\": \"08:00:00\",\n  \"horaFechamento\": \"18:00:00\"\n}"
+        },
+        "url": "{{baseUrl}}/v1/restaurante-expediente"
+      }
+    },
+    {
+      "name": "Cadastrar expediente - horário de fechamento antes da abertura",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idRestaurante\": \"{{idRestaurante}}\",\n  \"diaSemana\": \"TERCA\",\n  \"horaAbertura\": \"18:00:00\",\n  \"horaFechamento\": \"08:00:00\"\n}"
+        },
+        "url": "{{baseUrl}}/v1/restaurante-expediente"
+      }
+    },
+    {
+      "name": "Cadastrar expediente - dia duplicado para o restaurante",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idRestaurante\": \"{{idRestaurante}}\",\n  \"diaSemana\": \"SEGUNDA\",\n  \"horaAbertura\": \"10:00:00\",\n  \"horaFechamento\": \"20:00:00\"\n}"
+        },
+        "url": "{{baseUrl}}/v1/restaurante-expediente"
+      }
+    },
+    {
+      "name": "Consultar expediente por id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/restaurante-expediente/{{idExpediente}}"
+      }
+    },
+    {
+      "name": "Listar expedientes do restaurante",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/restaurante-expediente?idRestaurante={{idRestaurante}}"
+      }
+    },
+    {
+      "name": "Atualizar expediente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idRestaurante\": \"{{idRestaurante}}\",\n  \"diaSemana\": \"SEGUNDA\",\n  \"horaAbertura\": \"09:00:00\",\n  \"horaFechamento\": \"19:00:00\"\n}"
+        },
+        "url": "{{baseUrl}}/v1/restaurante-expediente/{{idExpediente}}"
+      }
+    },
+    {
+      "name": "Excluir expediente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 204', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/v1/restaurante-expediente/{{idExpediente}}"
+      }
+    },
+    {
+      "name": "Consultar expediente excluído - deve retornar 404",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/restaurante-expediente/{{idExpediente}}"
+      }
+    }
+  ]
+}
