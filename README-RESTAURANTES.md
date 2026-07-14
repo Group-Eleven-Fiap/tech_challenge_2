@@ -28,6 +28,7 @@ O módulo segue Clean Architecture. O núcleo não depende de JPA nem de HTTP.
 | Interface adapter | `core/mapper/RestauranteMapper.java` | Conversão entre domínio e DTO |
 | Interface adapter | `core/dto/RestauranteDTO.java` | Resposta da API sem dependência de JPA |
 | Infrastructure/web | `infra/web/rest/RestauranteApiController.java` | Endpoints REST em `/v1/restaurantes` |
+| Infrastructure/web | `infra/web/config/RestauranteControllerApi.java` | Contrato e documentação Swagger dos endpoints |
 | Infrastructure/web | `infra/web/dto/RestauranteInput.java` | Entrada e validações Jakarta Validation |
 | Infrastructure/database | `infra/database/jpa/RestauranteJpaGateway.java` | Implementação JPA da porta de persistência |
 | Infrastructure/database | `infra/database/jpa/entity/RestauranteEntity.java` | Tabela `TB_RESTAURANTE`, dono e relacionamento com expedientes |
@@ -110,7 +111,7 @@ Execute tudo e gere o relatório JaCoCo:
 .\mvnw.cmd clean verify
 ```
 
-O relatório HTML fica em `target/site/jacoco/index.html`. Na verificação desta branch foram executados 112 testes sem falhas. O CRUD de `Restaurante` alcançou 98,51% e o conjunto `Restaurante` + `RestauranteExpediente` alcançou 98,01% de cobertura de linhas.
+O relatório HTML fica em `target/site/jacoco/index.html`. Na verificação desta branch foram executados 113 testes sem falhas. O CRUD de `Restaurante` alcançou 98,51% e o conjunto `Restaurante` + `RestauranteExpediente` alcançou 98,01% de cobertura de linhas.
 
 Testes do módulo:
 
@@ -119,7 +120,7 @@ Testes do módulo:
 | `core/domain/RestauranteTest.java` | unitário | campos obrigatórios e normalização |
 | `core/usecase/RestauranteUseCaseImplTest.java` | unitário | regras, dono existente e CRUD |
 | `infra/web/rest/RestauranteApiControllerTest.java` | unitário | respostas HTTP produzidas pelos endpoints |
-| `RestauranteIntegrationTest.java` | integração | CRUD, chave estrangeira restaurante-expediente e exclusão em cascata com H2 |
+| `RestauranteIntegrationTest.java` | integração | Endpoints REST com MockMvc, H2, vínculo de expediente, cascata e `/v3/api-docs` |
 
 ## Collection
 
