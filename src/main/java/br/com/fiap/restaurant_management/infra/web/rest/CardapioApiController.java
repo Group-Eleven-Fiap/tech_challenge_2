@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/v2/cardapio")
+@RequestMapping("/v1/cardapio")
 @RequiredArgsConstructor
 public class CardapioApiController implements CardapioControllerApi {
 

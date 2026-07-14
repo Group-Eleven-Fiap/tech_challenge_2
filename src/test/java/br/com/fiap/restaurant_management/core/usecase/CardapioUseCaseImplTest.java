@@ -22,6 +22,9 @@ import static org.mockito.Mockito.*;
 class CardapioUseCaseImplTest {
 
     @Mock
+    RestauranteUseCase restauranteUseCase;
+
+    @Mock
     private CardapioMapper mapper;
 
     @Mock
@@ -31,7 +34,7 @@ class CardapioUseCaseImplTest {
 
     @BeforeEach
     void setUp() {
-        useCase = new CardapioUseCaseImpl(mapper, gateway);
+        useCase = new CardapioUseCaseImpl(restauranteUseCase, mapper, gateway);
     }
 
     private Cardapio buildDomain() {

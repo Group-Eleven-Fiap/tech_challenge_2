@@ -2,6 +2,7 @@ package br.com.fiap.restaurant_management.infra.database.mapper;
 
 import br.com.fiap.restaurant_management.core.dto.CardapioDTO;
 import br.com.fiap.restaurant_management.infra.database.jpa.entity.CardapioEntity;
+import br.com.fiap.restaurant_management.infra.database.jpa.entity.RestauranteEntity;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -9,7 +10,8 @@ public class CardapioEntityMapper {
 
     public CardapioEntity toEntity(CardapioDTO input) {
         return CardapioEntity.builder()
-                .idRestaurante(input.getIdRestaurante())
+                .id(input.getId())
+                .restaurante(RestauranteEntity.builder().id(input.getIdRestaurante()).build())
                 .nome(input.getNome())
                 .descricao(input.getDescricao())
                 .preco(input.getPreco())
@@ -20,7 +22,7 @@ public class CardapioEntityMapper {
 
     public CardapioDTO toCardapioDTO(CardapioEntity entity) {
         return new CardapioDTO(entity.getId(),
-                entity.getIdRestaurante(),
+                entity.getRestaurante().getId(),
                 entity.getNome(),
                 entity.getDescricao(),
                 entity.getPreco(),
