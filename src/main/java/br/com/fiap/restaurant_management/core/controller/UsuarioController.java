@@ -12,29 +12,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsuarioController {
 
-    private final CriarUsuarioUseCase criarUsuarioUseCase;
-    private final AtualizarUsuarioUseCase atualizarUsuarioUseCase;
-    private final AtualizarUsuarioTipoUsuarioUseCase atualizarUsuarioTipoUsuarioUseCase;
-    private final ExcluirUsuarioUseCase excluirUsuarioUseCase;
-    private final ConsultarUsuarioUseCase consultarUsuarioUseCase;
+    private final UsuarioUseCase useCase;
 
     public Long criar(UsuarioInputDto input) {
-        return criarUsuarioUseCase.criar(input);
+        return useCase.criar(input);
     }
 
     public void atualizar(Long id, UsuarioInputDto input) {
-        atualizarUsuarioUseCase.atualizar(id, input);
+        useCase.atualizar(id, input);
     }
 
     public void excluir(Long id) {
-        excluirUsuarioUseCase.excluir(id);
+        useCase.excluir(id);
     }
 
     public List<UsuarioOutputDto> consultar() {
-        return consultarUsuarioUseCase.consultar();
+        return useCase.consultar();
     }
 
-    public void atualizarUsuarioTipoUsuario(Long usuarioId, Long tipoUsuarioId) {
-        atualizarUsuarioTipoUsuarioUseCase.atualizar(usuarioId, tipoUsuarioId);
+    public void atualizarTipoUsuario(Long usuarioId, Long tipoUsuarioId) {
+        useCase.atualizarTipoUsuario(usuarioId, tipoUsuarioId);
     }
 }
