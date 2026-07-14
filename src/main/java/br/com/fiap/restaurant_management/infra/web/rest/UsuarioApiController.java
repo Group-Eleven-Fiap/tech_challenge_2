@@ -21,27 +21,27 @@ public class UsuarioApiController implements UsuarioControllerApi {
 
     private final UsuarioController controller;
 
-    @PostMapping
+    @Override
     public Long criar(@Valid @RequestBody UsuarioInput input) {
         return controller.criar(mapToDto(input));
     }
 
-    @PutMapping("{id}")
+    @Override
     public void atualizar(@PathVariable Long id, @Valid @RequestBody UsuarioInput input) {
         controller.atualizar(id, mapToDto(input));
     }
 
-    @PatchMapping("{usuarioId}")
+    @Override
     public void atualizarTipoUsuario(@Valid @RequestBody UsuarioTipoUsuarioInput input) {
         controller.atualizarTipoUsuario(input.getUsuarioId(), input.getTipoUsuarioId());
     }
 
-    @DeleteMapping("{id}")
+    @Override
     public void excluir(@PathVariable Long id) {
         controller.excluir(id);
     }
 
-    @GetMapping
+    @Override
     public List<UsuarioOutputDto> consultar() {
         return controller.consultar();
     }

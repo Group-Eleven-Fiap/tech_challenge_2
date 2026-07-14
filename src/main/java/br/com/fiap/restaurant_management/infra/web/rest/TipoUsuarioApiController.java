@@ -8,7 +8,10 @@ import br.com.fiap.restaurant_management.infra.web.dto.TipoUsuarioInput;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -20,22 +23,22 @@ public class TipoUsuarioApiController implements TipoUsuarioControllerApi {
 
     private final TipoUsuarioController controller;
 
-    @PostMapping
+    @Override
     public Long criar(@Valid @RequestBody TipoUsuarioInput input) {
         return controller.criar(mapToDto(input));
     }
 
-    @PutMapping("{id}")
+    @Override
     public void atualizar(@PathVariable Long id, @Valid @RequestBody TipoUsuarioInput input) {
         controller.atualizar(id, mapToDto(input));
     }
 
-    @DeleteMapping("{id}")
+    @Override
     public void excluir(@PathVariable Long id) {
         controller.excluir(id);
     }
 
-    @GetMapping
+    @Override
     public List<TipoUsuarioOutputDto> consultar() {
         return controller.consultar();
     }
