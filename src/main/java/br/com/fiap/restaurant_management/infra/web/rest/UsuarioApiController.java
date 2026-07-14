@@ -3,6 +3,7 @@ package br.com.fiap.restaurant_management.infra.web.rest;
 import br.com.fiap.restaurant_management.core.controller.UsuarioController;
 import br.com.fiap.restaurant_management.core.dto.UsuarioInputDto;
 import br.com.fiap.restaurant_management.core.dto.UsuarioOutputDto;
+import br.com.fiap.restaurant_management.infra.web.config.UsuarioControllerApi;
 import br.com.fiap.restaurant_management.infra.web.dto.UsuarioInput;
 import br.com.fiap.restaurant_management.infra.web.dto.UsuarioTipoUsuarioInput;
 import jakarta.validation.Valid;
@@ -16,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/usuario")
 @RequiredArgsConstructor
-public class UsuarioApiController {
+public class UsuarioApiController implements UsuarioControllerApi {
 
     private final UsuarioController controller;
 

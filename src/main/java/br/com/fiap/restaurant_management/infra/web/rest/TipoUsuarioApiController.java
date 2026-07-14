@@ -3,6 +3,7 @@ package br.com.fiap.restaurant_management.infra.web.rest;
 import br.com.fiap.restaurant_management.core.controller.TipoUsuarioController;
 import br.com.fiap.restaurant_management.core.dto.TipoUsuarioInputDto;
 import br.com.fiap.restaurant_management.core.dto.TipoUsuarioOutputDto;
+import br.com.fiap.restaurant_management.infra.web.config.TipoUsuarioControllerApi;
 import br.com.fiap.restaurant_management.infra.web.dto.TipoUsuarioInput;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/tipo-usuario")
 @RequiredArgsConstructor
-public class TipoUsuarioApiController {
+public class TipoUsuarioApiController implements TipoUsuarioControllerApi {
 
     private final TipoUsuarioController controller;
 
