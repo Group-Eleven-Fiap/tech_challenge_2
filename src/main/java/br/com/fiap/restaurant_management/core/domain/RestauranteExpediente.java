@@ -13,19 +13,19 @@ public class RestauranteExpediente {
             "SEGUNDA", "TERCA", "QUARTA", "QUINTA", "SEXTA", "SABADO", "DOMINGO");
 
     private UUID id;
-    private UUID idRestaurante;
+    private Long idRestaurante;
     private String diaSemana;
     private LocalTime horaAbertura;
     private LocalTime horaFechamento;
 
-    public RestauranteExpediente(UUID idRestaurante, String diaSemana, LocalTime horaAbertura, LocalTime horaFechamento) {
+    public RestauranteExpediente(Long idRestaurante, String diaSemana, LocalTime horaAbertura, LocalTime horaFechamento) {
         this.idRestaurante = idRestaurante;
         this.diaSemana = diaSemana;
         this.horaAbertura = horaAbertura;
         this.horaFechamento = horaFechamento;
     }
 
-    public RestauranteExpediente(UUID id, UUID idRestaurante, String diaSemana, LocalTime horaAbertura, LocalTime horaFechamento) {
+    public RestauranteExpediente(UUID id, Long idRestaurante, String diaSemana, LocalTime horaAbertura, LocalTime horaFechamento) {
         this.id = id;
         this.idRestaurante = idRestaurante;
         this.diaSemana = diaSemana;
@@ -35,7 +35,7 @@ public class RestauranteExpediente {
 
     // Valida que o restaurante foi informado
     public boolean validateIdRestaurante() {
-        return idRestaurante != null;
+        return idRestaurante != null && idRestaurante > 0;
     }
 
     // Valida que o dia da semana informado está entre os valores aceitos (mesma regra do CHECK ck_dia_semana)

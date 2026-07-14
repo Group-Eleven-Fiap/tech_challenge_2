@@ -33,14 +33,14 @@ class RestauranteExpedienteApiControllerTest {
     private RestauranteExpedienteApiController apiController;
 
     private UUID id;
-    private UUID idRestaurante;
+    private Long idRestaurante;
     private RestauranteExpedienteInput input;
     private RestauranteExpedienteDTO dtoRetornado;
 
     @BeforeEach
     void setUp() throws Exception {
         id = UUID.randomUUID();
-        idRestaurante = UUID.randomUUID();
+        idRestaurante = 1L;
         input = criarInput(idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
         dtoRetornado = new RestauranteExpedienteDTO(id, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
     }
@@ -94,7 +94,7 @@ class RestauranteExpedienteApiControllerTest {
 
     // RestauranteExpedienteInput só tem @NoArgsConstructor + getters (é um DTO de request),
     // então os campos são preenchidos via reflection para simular o binding do Jackson nos testes.
-    private RestauranteExpedienteInput criarInput(UUID idRestaurante, String diaSemana, LocalTime abertura, LocalTime fechamento) throws Exception {
+    private RestauranteExpedienteInput criarInput(Long idRestaurante, String diaSemana, LocalTime abertura, LocalTime fechamento) throws Exception {
         RestauranteExpedienteInput novoInput = new RestauranteExpedienteInput();
         setField(novoInput, "idRestaurante", idRestaurante);
         setField(novoInput, "diaSemana", diaSemana);

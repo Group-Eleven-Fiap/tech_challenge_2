@@ -11,7 +11,7 @@ public interface RestauranteExpedienteUseCase {
 
     RestauranteExpediente findById(UUID id);
 
-    List<RestauranteExpediente> findByRestaurante(UUID idRestaurante);
+    List<RestauranteExpediente> findByRestaurante(Long idRestaurante);
 
     RestauranteExpediente update(UUID id, RestauranteExpediente expediente);
 

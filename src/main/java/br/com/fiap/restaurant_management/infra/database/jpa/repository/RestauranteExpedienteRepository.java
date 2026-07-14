@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface RestauranteExpedienteRepository extends JpaRepository<RestauranteExpedienteEntity, UUID> {
 
-    List<RestauranteExpedienteEntity> findByIdRestaurante(UUID idRestaurante);
+    List<RestauranteExpedienteEntity> findByRestauranteId(Long idRestaurante);
 
-    boolean existsByIdRestauranteAndDiaSemanaIgnoreCase(UUID idRestaurante, String diaSemana);
+    boolean existsByRestauranteIdAndDiaSemanaIgnoreCase(Long idRestaurante, String diaSemana);
 }

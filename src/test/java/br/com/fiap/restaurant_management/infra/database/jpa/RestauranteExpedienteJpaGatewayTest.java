@@ -3,7 +3,9 @@ package br.com.fiap.restaurant_management.infra.database.jpa;
 import br.com.fiap.restaurant_management.core.dto.RestauranteExpedienteDTO;
 import br.com.fiap.restaurant_management.core.exception.BusinessRuleException;
 import br.com.fiap.restaurant_management.infra.database.jpa.entity.RestauranteExpedienteEntity;
+import br.com.fiap.restaurant_management.infra.database.jpa.entity.RestauranteEntity;
 import br.com.fiap.restaurant_management.infra.database.jpa.repository.RestauranteExpedienteRepository;
+import br.com.fiap.restaurant_management.infra.database.jpa.repository.RestauranteRepository;
 import br.com.fiap.restaurant_management.infra.database.mapper.RestauranteExpedienteEntityMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,22 +35,27 @@ class RestauranteExpedienteJpaGatewayTest {
     @Mock
     private RestauranteExpedienteRepository restauranteExpedienteRepository;
 
+    @Mock
+    private RestauranteRepository restauranteRepository;
+
     @InjectMocks
     private RestauranteExpedienteJpaGateway gateway;
 
     private UUID id;
-    private UUID idRestaurante;
+    private Long idRestaurante;
     private RestauranteExpedienteDTO dto;
     private RestauranteExpedienteEntity entity;
+    private RestauranteEntity restauranteEntity;
 
     @BeforeEach
     void setUp() {
         id = UUID.randomUUID();
-        idRestaurante = UUID.randomUUID();
+        idRestaurante = 1L;
         dto = new RestauranteExpedienteDTO(id, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
+        restauranteEntity = RestauranteEntity.builder().id(idRestaurante).build();
         entity = RestauranteExpedienteEntity.builder()
                 .id(id)
-                .idRestaurante(idRestaurante)
+                .restaurante(restauranteEntity)
                 .diaSemana("SEGUNDA")
                 .horaAbertura(LocalTime.of(8, 0))
                 .horaFechamento(LocalTime.of(18, 0))
@@ -57,7 +64,8 @@ class RestauranteExpedienteJpaGatewayTest {
 
     @Test
     void createExpedienteDeveSalvarEDevolverDto() {
-        when(restauranteExpedienteEntityMapper.toEntity(dto)).thenReturn(entity);
+        when(restauranteRepository.getReferenceById(idRestaurante)).thenReturn(restauranteEntity);
+        when(restauranteExpedienteEntityMapper.toEntity(dto, restauranteEntity)).thenReturn(entity);
         when(restauranteExpedienteRepository.save(entity)).thenReturn(entity);
         when(restauranteExpedienteEntityMapper.toDTO(entity)).thenReturn(dto);
 
@@ -88,7 +96,7 @@ class RestauranteExpedienteJpaGatewayTest {
 
     @Test
     void findByRestauranteDeveRetornarListaDeDtos() {
-        when(restauranteExpedienteRepository.findByIdRestaurante(idRestaurante)).thenReturn(List.of(entity));
+        when(restauranteExpedienteRepository.findByRestauranteId(idRestaurante)).thenReturn(List.of(entity));
         when(restauranteExpedienteEntityMapper.toDTO(entity)).thenReturn(dto);
 
         List<RestauranteExpedienteDTO> resultado = gateway.findByRestaurante(idRestaurante);
@@ -98,7 +106,7 @@ class RestauranteExpedienteJpaGatewayTest {
 
     @Test
     void existsByRestauranteAndDiaDeveDelegarParaORepository() {
-        when(restauranteExpedienteRepository.existsByIdRestauranteAndDiaSemanaIgnoreCase(idRestaurante, "SEGUNDA")).thenReturn(true);
+        when(restauranteExpedienteRepository.existsByRestauranteIdAndDiaSemanaIgnoreCase(idRestaurante, "SEGUNDA")).thenReturn(true);
 
         boolean resultado = gateway.existsByRestauranteAndDia(idRestaurante, "SEGUNDA");
 
@@ -108,7 +116,8 @@ class RestauranteExpedienteJpaGatewayTest {
     @Test
     void updateExpedienteDeveSalvarQuandoExistir() {
         when(restauranteExpedienteRepository.existsById(id)).thenReturn(true);
-        when(restauranteExpedienteEntityMapper.toEntity(dto)).thenReturn(entity);
+        when(restauranteRepository.getReferenceById(idRestaurante)).thenReturn(restauranteEntity);
+        when(restauranteExpedienteEntityMapper.toEntity(dto, restauranteEntity)).thenReturn(entity);
         when(restauranteExpedienteRepository.save(entity)).thenReturn(entity);
         when(restauranteExpedienteEntityMapper.toDTO(entity)).thenReturn(dto);
 

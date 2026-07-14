@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class RestauranteExpedienteTest {
 
-    private final UUID idRestaurante = UUID.randomUUID();
+    private final Long idRestaurante = 1L;
 
     @Nested
     @DisplayName("validateIdRestaurante")
