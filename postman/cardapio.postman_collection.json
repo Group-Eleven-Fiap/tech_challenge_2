@@ -1,0 +1,184 @@
+{
+  "info": {
+    "_postman_id": "27edb360-fab6-4f13-9fb7-ae774a25a80e",
+    "name": "Cardápio",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30434653"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "Cadastrar cardapio",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"idRestaurante\": 1,\r\n    \"nome\": \"Bife à Parmesana\",\r\n    \"descricao\": \"Suculento bife bovino empanado com molho de tomate caseiro e queijo derretido. Acompanha arroz e batata frita.\",\r\n    \"preco\": 49.90,\r\n    \"disponibilidadeRestaurante\": true,\r\n    \"fotoUrl\": \"https://example.com/images/bife-parmesana.jpg\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/v1/cardapio",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "v1",
+                "cardapio"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar cardapio por ID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/v1/cardapio/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "v1",
+                "cardapio",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar cardapio",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\": \"Pasta à Carbonara Premium\",\r\n    \"descricao\": \"Massa fresca com molho cremoso de ovos, queijo parmesão e pancetta de qualidade superior\",\r\n    \"preco\": 52.90,\r\n    \"disponibilidadeRestaurante\": true,\r\n    \"fotoUrl\": \"https://example.com/images/pasta-carbonara-premium.jpg\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/v1/cardapio/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "v1",
+                "cardapio",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar cardapio por ID",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/v1/cardapio/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "v1",
+                "cardapio",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar todos os cardapios",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/v1/cardapio",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "v1",
+                "cardapio"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

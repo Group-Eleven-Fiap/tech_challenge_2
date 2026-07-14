@@ -2,12 +2,12 @@ package br.com.fiap.restaurant_management.infra.database.jpa;
 
 import br.com.fiap.restaurant_management.core.dto.CardapioDTO;
 import br.com.fiap.restaurant_management.infra.database.jpa.entity.CardapioEntity;
+import br.com.fiap.restaurant_management.infra.database.jpa.entity.RestauranteEntity;
 import br.com.fiap.restaurant_management.infra.database.jpa.repository.CardapioRepository;
 import br.com.fiap.restaurant_management.infra.database.mapper.CardapioEntityMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -41,7 +41,7 @@ class CardapioJpaGatewayTest {
     private CardapioEntity buildEntity() {
         CardapioEntity e = new CardapioEntity();
         e.setId(1L);
-        e.setIdRestaurante(1L);
+        e.setRestaurante(new RestauranteEntity());
         e.setNome("Nome");
         e.setDescricao("Desc");
         e.setPreco(new BigDecimal("5.00"));

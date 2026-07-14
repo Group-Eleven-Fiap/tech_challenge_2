@@ -13,11 +13,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CardapioUseCaseImpl implements CardapioUseCase {
 
+    private final RestauranteUseCase restauranteUseCase;
     private final CardapioMapper cardapioMapper;
     private final CardapioGateway cardapioGateway;
 
     @Override
     public Cardapio criar(Cardapio cardapio) {
+        consultarPorId(cardapio.getIdRestaurante());
         var cardapioDTO = cardapioMapper.toCardapioDTO(cardapio);
         CardapioDTO newCardapio = cardapioGateway.criarCardapio(cardapioDTO);
         return cardapioMapper.toCardapio(newCardapio);
@@ -67,5 +69,9 @@ public class CardapioUseCaseImpl implements CardapioUseCase {
             .stream()
             .map(cardapioMapper::toCardapio)
             .toList();
+    }
+
+    private void consultarPorId(Long id) {
+        restauranteUseCase.consultarPorId(id);
     }
 }

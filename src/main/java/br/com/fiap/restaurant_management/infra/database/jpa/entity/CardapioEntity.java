@@ -23,8 +23,9 @@ public class CardapioEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "id_restaurante", nullable = false)
-    private Long idRestaurante;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_restaurante", nullable = false, foreignKey = @ForeignKey(name = "fk_cardapio_restaurante"))
+    private RestauranteEntity restaurante;
 
     @Column(name = "nome", nullable = false)
     private String nome;

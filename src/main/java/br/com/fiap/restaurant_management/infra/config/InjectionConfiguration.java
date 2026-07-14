@@ -40,8 +40,8 @@ public class InjectionConfiguration {
     private final UsuarioGateway usuarioGateway;
 
     @Bean
-    public CardapioUseCase cardapioUseCase() {
-        return new CardapioUseCaseImpl(cardapioMapper, cardapioGateway);
+    public CardapioUseCase cardapioUseCase(RestauranteUseCase restauranteUseCase) {
+        return new CardapioUseCaseImpl(restauranteUseCase, cardapioMapper, cardapioGateway);
     }
 
     @Bean

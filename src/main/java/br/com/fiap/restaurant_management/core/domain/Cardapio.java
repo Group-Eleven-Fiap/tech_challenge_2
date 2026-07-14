@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 public class Cardapio {
 
+    private Long id;
     private Long idRestaurante;
     private String nome;
     private String descricao;
@@ -33,6 +34,16 @@ public class Cardapio {
             throw new IllegalArgumentException("Caminho da foto é obrigatório");
         }
 
+        this.idRestaurante = idRestaurante;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.disponibilidadeRestaurante = disponibilidadeRestaurante;
+        this.fotoUrl = fotoUrl;
+    }
+
+    public Cardapio(Long id, Long idRestaurante, String nome, String descricao, BigDecimal preco, Boolean disponibilidadeRestaurante, String fotoUrl) {
+        this.id = id;
         this.idRestaurante = idRestaurante;
         this.nome = nome;
         this.descricao = descricao;
