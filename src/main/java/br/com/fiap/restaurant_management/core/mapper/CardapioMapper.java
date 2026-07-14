@@ -18,7 +18,7 @@ public class CardapioMapper {
     }
 
     public CardapioDTO toCardapioDTO(Cardapio cardapio) {
-        return new CardapioDTO(null,
+        return new CardapioDTO(cardapio.getId(),
                 cardapio.getIdRestaurante(),
                 cardapio.getNome(),
                 cardapio.getDescricao(),
