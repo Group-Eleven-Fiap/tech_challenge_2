@@ -3,6 +3,7 @@ package br.com.fiap.restaurant_management;
 import br.com.fiap.restaurant_management.infra.database.jpa.entity.RestauranteEntity;
 import br.com.fiap.restaurant_management.infra.database.jpa.entity.RestauranteExpedienteEntity;
 import br.com.fiap.restaurant_management.infra.database.jpa.entity.UsuarioEntity;
+import br.com.fiap.restaurant_management.infra.database.jpa.repository.CardapioRepository;
 import br.com.fiap.restaurant_management.infra.database.jpa.repository.RestauranteExpedienteRepository;
 import br.com.fiap.restaurant_management.infra.database.jpa.repository.RestauranteRepository;
 import br.com.fiap.restaurant_management.infra.database.jpa.repository.UsuarioRepository;
@@ -29,6 +30,9 @@ class RestauranteExpedienteIntegrationTest {
     private MockMvc mockMvc;
 
     @Autowired
+    private CardapioRepository cardapioRepository;
+
+    @Autowired
     private RestauranteRepository restauranteRepository;
 
     @Autowired
@@ -41,6 +45,7 @@ class RestauranteExpedienteIntegrationTest {
 
     @BeforeEach
     void setUp() {
+        cardapioRepository.deleteAll();
         restauranteExpedienteRepository.deleteAll();
         restauranteRepository.deleteAll();
         usuarioRepository.deleteAll();
