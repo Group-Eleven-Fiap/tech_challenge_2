@@ -4,7 +4,6 @@ import br.com.fiap.restaurant_management.core.dto.RestauranteExpedienteDTO;
 import br.com.fiap.restaurant_management.infra.web.dto.RestauranteExpedienteInput;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -14,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Tag(name = "Expediente do Restaurante", description = "Operações relacionadas ao expediente do restaurante")
 public interface RestauranteExpedienteControllerApi {
@@ -35,7 +33,7 @@ public interface RestauranteExpedienteControllerApi {
             @ApiResponse(responseCode = "404", description = "Expediente não encontrado", content = @Content(mediaType = "application/problem+json")),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(mediaType = "application/problem+json"))
     })
-    RestauranteExpedienteDTO findById(@PathVariable UUID id);
+    RestauranteExpedienteDTO findById(@PathVariable Long id);
 
     @GetMapping
     @Operation(summary = "Listar expedientes por restaurante", description = "Retorna uma lista com todos os expedientes de um restaurante.")
@@ -53,7 +51,7 @@ public interface RestauranteExpedienteControllerApi {
             @ApiResponse(responseCode = "404", description = "Expediente não encontrado", content = @Content(mediaType = "application/problem+json")),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(mediaType = "application/problem+json"))
     })
-    RestauranteExpedienteDTO update(@PathVariable UUID id, @Valid @RequestBody RestauranteExpedienteInput input);
+    RestauranteExpedienteDTO update(@PathVariable Long id, @Valid @RequestBody RestauranteExpedienteInput input);
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -63,5 +61,5 @@ public interface RestauranteExpedienteControllerApi {
             @ApiResponse(responseCode = "404", description = "Expediente não encontrado", content = @Content(mediaType = "application/problem+json")),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(mediaType = "application/problem+json"))
     })
-    void delete(@PathVariable UUID id);
+    void delete(@PathVariable Long id);
 }

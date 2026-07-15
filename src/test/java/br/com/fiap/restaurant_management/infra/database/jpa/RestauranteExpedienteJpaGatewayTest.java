@@ -17,14 +17,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class RestauranteExpedienteJpaGatewayTest {
@@ -41,7 +38,7 @@ class RestauranteExpedienteJpaGatewayTest {
     @InjectMocks
     private RestauranteExpedienteJpaGateway gateway;
 
-    private UUID id;
+    private Long id;
     private Long idRestaurante;
     private RestauranteExpedienteDTO dto;
     private RestauranteExpedienteEntity entity;
@@ -49,7 +46,7 @@ class RestauranteExpedienteJpaGatewayTest {
 
     @BeforeEach
     void setUp() {
-        id = UUID.randomUUID();
+        id = 10L;
         idRestaurante = 1L;
         dto = new RestauranteExpedienteDTO(id, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
         restauranteEntity = RestauranteEntity.builder().id(idRestaurante).build();
@@ -65,11 +62,11 @@ class RestauranteExpedienteJpaGatewayTest {
     @Test
     void createExpedienteDeveSalvarEDevolverDto() {
         when(restauranteRepository.getReferenceById(idRestaurante)).thenReturn(restauranteEntity);
-        when(restauranteExpedienteEntityMapper.toEntity(dto, restauranteEntity)).thenReturn(entity);
+        when(restauranteExpedienteEntityMapper.toEntity(any(RestauranteExpedienteDTO.class), eq(restauranteEntity))).thenReturn(entity);
         when(restauranteExpedienteRepository.save(entity)).thenReturn(entity);
         when(restauranteExpedienteEntityMapper.toDTO(entity)).thenReturn(dto);
 
-        RestauranteExpedienteDTO resultado = gateway.createExpediente(dto);
+        RestauranteExpedienteDTO resultado = gateway.createExpediente(new RestauranteExpedienteDTO(null, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0)));
 
         assertThat(resultado).isEqualTo(dto);
         verify(restauranteExpedienteRepository, times(1)).save(entity);
@@ -134,7 +131,7 @@ class RestauranteExpedienteJpaGatewayTest {
                 .isInstanceOf(BusinessRuleException.class)
                 .hasMessage("expediente não encontrado");
 
-        verify(restauranteExpedienteRepository, times(0)).save(any());
+        verify(restauranteExpedienteRepository, never()).save(any());
     }
 
     @Test

@@ -12,7 +12,7 @@ public class RestauranteExpediente {
     private static final List<String> DIAS_VALIDOS = List.of(
             "SEGUNDA", "TERCA", "QUARTA", "QUINTA", "SEXTA", "SABADO", "DOMINGO");
 
-    private UUID id;
+    private Long id;
     private Long idRestaurante;
     private String diaSemana;
     private LocalTime horaAbertura;
@@ -25,7 +25,7 @@ public class RestauranteExpediente {
         this.horaFechamento = horaFechamento;
     }
 
-    public RestauranteExpediente(UUID id, Long idRestaurante, String diaSemana, LocalTime horaAbertura, LocalTime horaFechamento) {
+    public RestauranteExpediente(Long id, Long idRestaurante, String diaSemana, LocalTime horaAbertura, LocalTime horaFechamento) {
         this.id = id;
         this.idRestaurante = idRestaurante;
         this.diaSemana = diaSemana;

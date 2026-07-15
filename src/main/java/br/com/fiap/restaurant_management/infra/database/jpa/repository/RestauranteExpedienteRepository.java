@@ -4,9 +4,8 @@ import br.com.fiap.restaurant_management.infra.database.jpa.entity.RestauranteEx
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.UUID;
 
-public interface RestauranteExpedienteRepository extends JpaRepository<RestauranteExpedienteEntity, UUID> {
+public interface RestauranteExpedienteRepository extends JpaRepository<RestauranteExpedienteEntity, Long> {
 
     List<RestauranteExpedienteEntity> findByRestauranteId(Long idRestaurante);
 

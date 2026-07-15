@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -26,7 +25,7 @@ public class RestauranteExpedienteApiController implements RestauranteExpediente
     }
 
     @Override
-    public RestauranteExpedienteDTO findById(UUID id) {
+    public RestauranteExpedienteDTO findById(Long id) {
         return restauranteExpedienteController.buscarPorId(id);
     }
 
@@ -36,16 +35,16 @@ public class RestauranteExpedienteApiController implements RestauranteExpediente
     }
 
     @Override
-    public RestauranteExpedienteDTO update(UUID id, RestauranteExpedienteInput input) {
+    public RestauranteExpedienteDTO update(Long id, RestauranteExpedienteInput input) {
         return restauranteExpedienteController.atualizarExpediente(id, mapToDto(id, input));
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(Long id) {
         restauranteExpedienteController.deletarExpediente(id);
     }
 
-    private RestauranteExpedienteDTO mapToDto(UUID id, RestauranteExpedienteInput input) {
+    private RestauranteExpedienteDTO mapToDto(Long id, RestauranteExpedienteInput input) {
         return new RestauranteExpedienteDTO(
                 id,
                 input.getIdRestaurante(),

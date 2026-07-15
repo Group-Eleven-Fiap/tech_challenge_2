@@ -18,18 +18,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class RestauranteExpedienteUseCaseImplTest {
@@ -56,7 +50,7 @@ class RestauranteExpedienteUseCaseImplTest {
         expedienteValido = new RestauranteExpediente(idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
         dtoValido = new RestauranteExpedienteDTO(null, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
         lenient().when(restauranteGateway.consultarPorId(idRestaurante))
-                .thenReturn(Optional.of(org.mockito.Mockito.mock(br.com.fiap.restaurant_management.core.domain.Restaurante.class)));
+                .thenReturn(Optional.of(mock(br.com.fiap.restaurant_management.core.domain.Restaurante.class)));
     }
 
     @Nested
@@ -66,7 +60,7 @@ class RestauranteExpedienteUseCaseImplTest {
         @Test
         @DisplayName("deve criar o expediente quando os dados sao validos e o dia esta disponivel")
         void deveCriarExpedienteComSucesso() {
-            UUID novoId = UUID.randomUUID();
+            long novoId = 10L;
             var dtoRetornado = new RestauranteExpedienteDTO(novoId, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
             var domainRetornado = new RestauranteExpediente(novoId, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
 
@@ -148,7 +142,7 @@ class RestauranteExpedienteUseCaseImplTest {
         @Test
         @DisplayName("deve retornar o expediente quando encontrado")
         void deveRetornarExpedienteQuandoEncontrado() {
-            UUID id = UUID.randomUUID();
+            long id = 10L;
             var dto = new RestauranteExpedienteDTO(id, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
 
             when(restauranteExpedienteGateway.findById(id)).thenReturn(Optional.of(dto));
@@ -162,7 +156,7 @@ class RestauranteExpedienteUseCaseImplTest {
         @Test
         @DisplayName("deve lancar BusinessRuleException quando nao encontrado")
         void deveLancarExcecaoQuandoNaoEncontrado() {
-            UUID id = UUID.randomUUID();
+            long id = 10L;
             when(restauranteExpedienteGateway.findById(id)).thenReturn(Optional.empty());
 
             assertThatThrownBy(() -> useCase.findById(id))
@@ -178,7 +172,7 @@ class RestauranteExpedienteUseCaseImplTest {
         @Test
         @DisplayName("deve retornar a lista de expedientes de um restaurante")
         void deveRetornarListaDeExpedientes() {
-            var dto = new RestauranteExpedienteDTO(UUID.randomUUID(), idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
+            var dto = new RestauranteExpedienteDTO(10L, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
 
             when(restauranteExpedienteGateway.findByRestaurante(idRestaurante)).thenReturn(List.of(dto));
             when(restauranteExpedienteMapper.toDomain(dto)).thenReturn(expedienteValido);
@@ -206,7 +200,7 @@ class RestauranteExpedienteUseCaseImplTest {
         @Test
         @DisplayName("deve atualizar quando o dia da semana nao mudou, sem checar disponibilidade novamente")
         void deveAtualizarSemTrocarDia() {
-            UUID id = UUID.randomUUID();
+            long id = 10L;
             var dtoExistente = new RestauranteExpedienteDTO(id, idRestaurante, "SEGUNDA", LocalTime.of(7, 0), LocalTime.of(15, 0));
             var existente = new RestauranteExpediente(id, idRestaurante, "SEGUNDA", LocalTime.of(7, 0), LocalTime.of(15, 0));
             var novosDados = new RestauranteExpediente(idRestaurante, "SEGUNDA", LocalTime.of(9, 0), LocalTime.of(19, 0));
@@ -228,7 +222,7 @@ class RestauranteExpedienteUseCaseImplTest {
         @Test
         @DisplayName("deve checar disponibilidade quando o dia da semana for alterado")
         void deveChecarDisponibilidadeQuandoTrocarDia() {
-            UUID id = UUID.randomUUID();
+            long id = 10L;
             var dtoExistente = new RestauranteExpedienteDTO(id, idRestaurante, "SEGUNDA", LocalTime.of(7, 0), LocalTime.of(15, 0));
             var existente = new RestauranteExpediente(id, idRestaurante, "SEGUNDA", LocalTime.of(7, 0), LocalTime.of(15, 0));
             var novosDados = new RestauranteExpediente(idRestaurante, "TERCA", LocalTime.of(9, 0), LocalTime.of(19, 0));
@@ -247,7 +241,7 @@ class RestauranteExpedienteUseCaseImplTest {
         @Test
         @DisplayName("deve lancar BusinessRuleException ao atualizar com horario invalido")
         void deveLancarExcecaoAoAtualizarComHorarioInvalido() {
-            UUID id = UUID.randomUUID();
+            long id = 10L;
             var novosDados = new RestauranteExpediente(idRestaurante, "SEGUNDA", LocalTime.of(20, 0), LocalTime.of(8, 0));
 
             assertThatThrownBy(() -> useCase.update(id, novosDados))
@@ -265,7 +259,7 @@ class RestauranteExpedienteUseCaseImplTest {
         @Test
         @DisplayName("deve deletar quando o expediente existir")
         void deveDeletarQuandoExistir() {
-            UUID id = UUID.randomUUID();
+            long id = 10L;
             var dto = new RestauranteExpedienteDTO(id, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
 
             when(restauranteExpedienteGateway.findById(id)).thenReturn(Optional.of(dto));
@@ -279,7 +273,7 @@ class RestauranteExpedienteUseCaseImplTest {
         @Test
         @DisplayName("deve lancar BusinessRuleException ao deletar expediente inexistente, sem chamar o gateway de delecao")
         void deveLancarExcecaoAoDeletarInexistente() {
-            UUID id = UUID.randomUUID();
+            long id = 10L;
             when(restauranteExpedienteGateway.findById(id)).thenReturn(Optional.empty());
 
             assertThatThrownBy(() -> useCase.delete(id))

@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,7 +32,7 @@ public class RestauranteExpedienteUseCaseImpl implements RestauranteExpedienteUs
     }
 
     @Override
-    public RestauranteExpediente findById(UUID id) {
+    public RestauranteExpediente findById(Long id) {
         return restauranteExpedienteGateway.findById(id)
                 .map(restauranteExpedienteMapper::toDomain)
                 .orElseThrow(() -> new BusinessRuleException("expediente não encontrado"));
@@ -47,7 +46,7 @@ public class RestauranteExpedienteUseCaseImpl implements RestauranteExpedienteUs
     }
 
     @Override
-    public RestauranteExpediente update(UUID id, RestauranteExpediente expediente) {
+    public RestauranteExpediente update(Long id, RestauranteExpediente expediente) {
 
         validateExpediente(expediente);
         validateRestauranteExistente(expediente.getIdRestaurante());
@@ -71,7 +70,7 @@ public class RestauranteExpedienteUseCaseImpl implements RestauranteExpedienteUs
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(Long id) {
         findById(id);
         restauranteExpedienteGateway.deleteById(id);
     }

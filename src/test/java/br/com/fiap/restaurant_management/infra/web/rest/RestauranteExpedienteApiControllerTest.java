@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.lang.reflect.Field;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,14 +31,14 @@ class RestauranteExpedienteApiControllerTest {
     @InjectMocks
     private RestauranteExpedienteApiController apiController;
 
-    private UUID id;
+    private Long id;
     private Long idRestaurante;
     private RestauranteExpedienteInput input;
     private RestauranteExpedienteDTO dtoRetornado;
 
     @BeforeEach
     void setUp() throws Exception {
-        id = UUID.randomUUID();
+        id = 10L;
         idRestaurante = 1L;
         input = criarInput(idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
         dtoRetornado = new RestauranteExpedienteDTO(id, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
@@ -92,8 +91,6 @@ class RestauranteExpedienteApiControllerTest {
         verify(restauranteExpedienteController, times(1)).deletarExpediente(id);
     }
 
-    // RestauranteExpedienteInput só tem @NoArgsConstructor + getters (é um DTO de request),
-    // então os campos são preenchidos via reflection para simular o binding do Jackson nos testes.
     private RestauranteExpedienteInput criarInput(Long idRestaurante, String diaSemana, LocalTime abertura, LocalTime fechamento) throws Exception {
         RestauranteExpedienteInput novoInput = new RestauranteExpedienteInput();
         setField(novoInput, "idRestaurante", idRestaurante);

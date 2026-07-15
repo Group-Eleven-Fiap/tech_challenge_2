@@ -4,13 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalTime;
-import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
 public class RestauranteExpedienteDTO {
 
-    private UUID id;
+    private Long id;
     private Long idRestaurante;
     private String diaSemana;
     private LocalTime horaAbertura;
