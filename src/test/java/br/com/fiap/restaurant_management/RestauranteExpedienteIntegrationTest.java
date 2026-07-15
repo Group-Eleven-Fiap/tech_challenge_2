@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalTime;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -73,7 +74,7 @@ class RestauranteExpedienteIntegrationTest {
         // Find by Id
         mockMvc.perform(get("/v1/restaurante-expediente/{id}", expediente.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(expediente.getId().toString()));
+                .andExpect(jsonPath("$.id", is(expediente.getId().intValue())));
 
         // Find by Restaurante
         mockMvc.perform(get("/v1/restaurante-expediente")

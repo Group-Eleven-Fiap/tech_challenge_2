@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class RestauranteExpedienteController {
         return restauranteExpedienteMapper.toDTO(novoExpediente);
     }
 
-    public RestauranteExpedienteDTO buscarPorId(UUID id) {
+    public RestauranteExpedienteDTO buscarPorId(Long id) {
         RestauranteExpediente expediente = restauranteExpedienteUseCase.findById(id);
         return restauranteExpedienteMapper.toDTO(expediente);
     }
@@ -34,13 +33,13 @@ public class RestauranteExpedienteController {
                 .toList();
     }
 
-    public RestauranteExpedienteDTO atualizarExpediente(UUID id, RestauranteExpedienteDTO input) {
+    public RestauranteExpedienteDTO atualizarExpediente(Long id, RestauranteExpedienteDTO input) {
         RestauranteExpediente expediente = restauranteExpedienteMapper.toDomain(input);
         RestauranteExpediente atualizado = restauranteExpedienteUseCase.update(id, expediente);
         return restauranteExpedienteMapper.toDTO(atualizado);
     }
 
-    public void deletarExpediente(UUID id) {
+    public void deletarExpediente(Long id) {
         restauranteExpedienteUseCase.delete(id);
     }
 }

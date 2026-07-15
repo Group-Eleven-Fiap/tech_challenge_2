@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Slf4j
 @Component
@@ -35,7 +34,7 @@ public class RestauranteExpedienteJpaGateway implements RestauranteExpedienteGat
     }
 
     @Override
-    public Optional<RestauranteExpedienteDTO> findById(UUID id) {
+    public Optional<RestauranteExpedienteDTO> findById(Long id) {
         return restauranteExpedienteRepository.findById(id)
                 .map(restauranteExpedienteEntityMapper::toDTO);
     }
@@ -64,7 +63,7 @@ public class RestauranteExpedienteJpaGateway implements RestauranteExpedienteGat
     }
 
     @Override
-    public void deleteById(UUID id) {
+    public void deleteById(Long id) {
         restauranteExpedienteRepository.deleteById(id);
     }
 }

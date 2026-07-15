@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -32,14 +31,14 @@ class RestauranteExpedienteControllerTest {
     @InjectMocks
     private RestauranteExpedienteController controller;
 
-    private UUID id;
+    private Long id;
     private Long idRestaurante;
     private RestauranteExpedienteDTO dto;
     private RestauranteExpediente domain;
 
     @BeforeEach
     void setUp() {
-        id = UUID.randomUUID();
+        id = 1L;
         idRestaurante = 1L;
         dto = new RestauranteExpedienteDTO(id, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));
         domain = new RestauranteExpediente(id, idRestaurante, "SEGUNDA", LocalTime.of(8, 0), LocalTime.of(18, 0));

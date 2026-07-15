@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalTime;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -115,7 +114,7 @@ class RestauranteExpedienteTest {
     @Test
     @DisplayName("construtor com id deve manter todos os campos preenchidos corretamente")
     void construtorComIdDeveManterCampos() {
-        UUID id = UUID.randomUUID();
+        Long id = 10L;
         var expediente = new RestauranteExpediente(id, idRestaurante, "SEXTA", LocalTime.of(11, 0), LocalTime.of(23, 0));
 
         assertThat(expediente.getId()).isEqualTo(id);
